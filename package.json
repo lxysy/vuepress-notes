@@ -1,0 +1,32 @@
+{
+  "name": "vuepress-notes",
+  "version": "1.0.0",
+  "description": "学习笔记",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "vuepress": "^1.9.10"
+  },
+  "devDependencies": {
+    "vuepress-plugin-cursor-effects": "^1.1.6",
+    "vuepress-plugin-sakura": "^1.2.1",
+    "vuepress-theme-reco": "^1.6.17"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lxysy/vuepress-notes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lxysy/vuepress-notes/issues"
+  },
+  "homepage": "https://github.com/lxysy/vuepress-notes#readme"
+}
