@@ -11,6 +11,8 @@ http://v1.vuepress-reco.recoluan.com/views/1.x/
 
 ### 文章：
 https://juejin.cn/post/7189073364365869093?searchId=20231019100419A26FC2508D2F3E32F2BA#heading-18
+自动化部署
+https://juejin.cn/post/6937532951223599141
 
 ### 插件：
 
