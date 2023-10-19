@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with: null
+        with:
         fetch-depth: 0
       - uses: actions/setup-node@v3
-        with: null
+        with:
         node-version: 16
       - name: Install dependencies
         run: npm install --frozen-lockfile
