@@ -3,7 +3,7 @@ name: build to my blog
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -33,6 +33,7 @@ jobs:
       
       # 环境变量
         env:
+          # shh 的私钥，需要在仓库中配置action secert
           GITHUB_TOKEN: ${{ secrets.ACTION_SECERT }}
         with:
           # 部署到 gh-pages 分支
