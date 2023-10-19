@@ -1,42 +1,26 @@
 name: build to my blog
-
-on:
+'on':
   push:
     branches:
       - main
-
 jobs:
   deploy:
-    runs-on: ubuntu-latest # 指定运行所需要的虚拟机环境（必填）
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      with:
-          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
-          fetch-depth: 0
-
+        with: null
+        fetch-depth: 0
       - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
+        with: null
+        node-version: 16
       - name: Install dependencies
         run: npm install --frozen-lockfile
-
-       # 运行构建脚本
       - name: Build VuePress site
-        run: npm docs:build
-
-      # 查看 workflow 的文档来获取更多信息
-      # @see https://github.com/crazy-max/ghaction-github-pages
-      # crazy-max/ghaction-github-pages@v2.5.0 该版本支持https部署
+        run: 'npm docs:build'
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
-      
-      # 环境变量
         env:
-          # shh 的私钥，需要在仓库中配置action secert
-          GITHUB_TOKEN: ${{ secrets.ACTION_SECERT }}
+          GITHUB_TOKEN: '${{ secrets.ACTION_SECERT }}'
         with:
-          # 部署到 gh-pages 分支
           target_branch: gh-pages
-          # 部署目录为 VuePress 的默认输出目录
           build_dir: docs/.vuepress/dist
