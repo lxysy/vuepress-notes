@@ -7,7 +7,7 @@ module.exports = {
    * 当部署的网站为https://foo.github.io/bar/，不是根路径时
    * base 的值就应该被设置为 "/bar/" (应当总是以斜杠开始，并以斜杠结束)
    */
-  base: "/vuepress-notes /",
+  base: "/vuepress-notes/",
  
   locales: {
     "/": {
