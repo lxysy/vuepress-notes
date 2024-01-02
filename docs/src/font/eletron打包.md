@@ -1,3 +1,12 @@
+---
+title: electron
+date: 2024-01-02
+categories:
+  - electron
+tags:
+  - electron
+---
+
 electron打包
 
 依赖如下：

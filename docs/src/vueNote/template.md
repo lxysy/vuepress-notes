@@ -1,4 +1,14 @@
-# 模板编译
+---
+title: vue模板编译
+date: 2024-01-02
+categories:
+  - vue
+  - vue原理
+tags:
+  - vue
+---
+
+# vue模板编译
 
 ![image-20230322091038615](./img/image-20230322091038615.png)
 

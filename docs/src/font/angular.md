@@ -1,4 +1,12 @@
-
+---
+title: angular
+date: 2024-01-02
+categories:
+  - 框架
+  - angular
+tags:
+  - angular
+---
 
 # 基本概念
 
