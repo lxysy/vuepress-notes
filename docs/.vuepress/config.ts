@@ -43,7 +43,7 @@ module.exports = {
    */
   themeConfig: {
     logo: '/avator.jpeg',
-    authorAvatar: 'avator.jpeg',
+    authorAvatar: '/avator.jpeg',
     // 自动生成侧边栏
     subSidebar:'auto',
     author: "FYShawn",
