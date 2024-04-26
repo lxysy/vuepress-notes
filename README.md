@@ -29,4 +29,6 @@ npm install vuepress-plugin-cursor-effects -D
 ```
 
 **<u>打包时的node版本选用v16.20.2</u>**
+### 部署
+在使用部署脚本前先提交关于文档的更改到main分支，这里的部署脚本实际就是将打包后的文件上传到gh-page分支
 
