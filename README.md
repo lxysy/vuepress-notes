@@ -28,4 +28,5 @@ vuepress-plugin-cursor-effects
 npm install vuepress-plugin-cursor-effects -D
 ```
 
-打包时的node版本选用v16.20.2
+**<u>打包时的node版本选用v16.20.2</u>**
+
