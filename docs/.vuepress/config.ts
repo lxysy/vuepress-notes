@@ -42,8 +42,8 @@ module.exports = {
    * Type is `DefaultThemeConfig`
    */
   themeConfig: {
-    logo: '/avator.jpeg',
-    authorAvatar: '/avator.jpeg',
+    logo: '/avator1.jpg',
+    authorAvatar: '/avator1.jpg',
     // 自动生成侧边栏
     subSidebar:'auto',
     author: "FYShawn",
