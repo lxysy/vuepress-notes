@@ -17,10 +17,4 @@ jobs:
         run: npm ci
       - name: Build VuePress site
         run: npm run docs:build
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2
-        env:
-          GITHUB_TOKEN: '${{ secrets.ACTION_SECERT }}'
-        with:
-          target_branch: gh-pages
-          build_dir: docs/.vuepress/dist
+      
