@@ -2,7 +2,7 @@ name: build to my blog
 'on':
   push:
     branches:
-      - main
+      - dev
 jobs:
   deploy:
     runs-on: ubuntu-latest

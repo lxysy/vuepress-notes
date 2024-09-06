@@ -1,5 +1,11 @@
-
-
+---
+title: 计算属性 computed 与 lazy
+date: 2024-09-06
+categories:
+  - vue3
+tags:
+  - vue3
+---
 # 计算属性 computed 与 lazy
 
 ​		在深入讲解计算属性之前，我们需要先来聊聊关于懒执行的effect，即 lazy 的 effect ,现在我们所实现的 effect 函数会立即执行传递给它的副作用函数.

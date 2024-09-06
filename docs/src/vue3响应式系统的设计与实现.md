@@ -1,3 +1,12 @@
+---
+title: vue3响应式系统的设计与实现
+date: 2024-09-06
+categories:
+  - vue3
+tags:
+  - vue3
+---
+# vue3响应式系统的设计与实现
 ## 和vue2的差异
 
 这个方法的作用就是使用`Object.defineProperty`创建响应式数据。首先根据传入的`obj`和`key`计算出`val`具体的值；如果`val`还是对象，那就使用`observe`方法进行递归创建，在递归的过程中使用`Object.defineProperty`将对象的**每一个**属性都变成响应式数据：

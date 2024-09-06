@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "dependencies": {
-    "vuepress": "1.9.7"
+    "vuepress": "1.9.10"
   },
   "devDependencies": {
     "@types/node": "^20.8.7",
@@ -16,8 +16,8 @@
     "vuepress-theme-reco": "1.6.17"
   },
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

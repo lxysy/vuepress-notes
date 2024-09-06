@@ -31,4 +31,16 @@ npm install vuepress-plugin-cursor-effects -D
 **<u>打包时的node版本选用v16.20.2</u>**
 ### 部署
 在使用部署脚本前先提交关于文档的更改到main分支，这里的部署脚本实际就是将打包后的文件上传到gh-page分支
+windows下时
+```shell
+cd docs/.vuepress/dist
+
+git init
+git add -A
+git commit -m 'deploy'
+
+# 如果发布到 https://<USERNAME>.github.io/<REPO> 或者使用https
+
+git push -f git@github.com:lxysy/vuepress-notes.git master:gh-pages
+```
 
