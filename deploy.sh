@@ -13,8 +13,7 @@ git init
 git add -A
 git commit -m 'deploy'
 
-# 如果发布到 https://<USERNAME>.github.io/<REPO>
-
+# 或者 https://github.com/lxysy/vuepress-notes.git
 git push -f git@github.com:lxysy/vuepress-notes.git master:gh-pages
 
 cd -

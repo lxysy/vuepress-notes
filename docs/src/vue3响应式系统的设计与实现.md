@@ -192,7 +192,7 @@ node ./scripts/dev.js reactivity -f esm-browser
 >
 > 2. 直接引入 ESM 格式的资源
 >
->    过随着技术的发展和浏览器的支持，现在主流浏览器对原生 ESM 的支持都不错，所以用户除了能够使用 <script> 标签引用 IIFE 格式的资源外，还可以直接引入 ESM 格式的资源。例如 Vue.js 3 还会 输出 vue.esm-browser.js 文件，用户可以直接用 
+>    过随着技术的发展和浏览器的支持，现在主流浏览器对原生 ESM 的支持都不错，所以用户除了能够使用 `script` 标签引用 IIFE 格式的资源外，还可以直接引入 ESM 格式的资源。例如 Vue.js 3 还会 输出 vue.esm-browser.js 文件，用户可以直接用 
 
 然后在reactivity下随便创建个文件夹（一般是examples），创建创建html文件，引入dist中的源码即可
 
