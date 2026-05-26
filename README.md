@@ -28,7 +28,18 @@ vuepress-plugin-cursor-effects
 npm install vuepress-plugin-cursor-effects -D
 ```
 
-**<u>打包时的node版本选用v16.20.2</u>**
 ### 部署
-在使用部署脚本前先提交关于文档的更改到main分支，这里的部署脚本实际就是将打包后的文件上传到gh-page分支
+
+项目使用 GitHub Actions 自动构建与部署。
+
+**工作流文件：** `.github/workflows/doc.yml`
+
+流程：
+1. 推送到 `main` 分支自动触发
+2. 使用 Node 18 安装依赖（`npm ci`）
+3. 构建静态文件（`npm run docs:build`）
+4. 通过 `peaceiris/actions-gh-pages` 将构建产物推送到 `gh-pages` 分支
+5. GitHub Pages 自动从 `gh-pages` 分支部署
+
+> **注意：** 由于 VuePress 1.x 依赖 webpack 4，在 Node 17+ 上构建需设置 `NODE_OPTIONS=--openssl-legacy-provider`，已在 CI 中配置。
 
