@@ -19,6 +19,8 @@ jobs:
         run: npm ci
       - name: Build VuePress site
         run: npm run docs:build
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
