@@ -59,24 +59,8 @@ module.exports = {
         ]
       }
     ],
-    // 侧边栏
-    sidebar: [
-      {
-        title: "可视化",
-        collapsable: false,
-        children: [
-          { title: "D3.js 常用 API 与场景", path: "/src/visualization/d3js-vue-guide" },
-          { title: "AntV G6 常用 API 与场景", path: "/src/visualization/antvg6-vue-guide" },
-        ],
-      },
-      {
-        title: "工程化",
-        collapsable: false,
-        children: [
-          { title: "Webpack & Vite 配置指南", path: "/src/engineering/webpack-vite-vue-guide" },
-        ],
-      },
-    ],
+    // 侧边栏 - 禁用左侧边栏
+    sidebar: false,
      // 博客配置
      blogConfig: {
       category: {
