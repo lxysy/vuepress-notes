@@ -4,7 +4,7 @@
 set -e
 
 # 生成静态文件
-npm run docs:build
+NODE_OPTIONS=--openssl-legacy-provider npm run docs:build
 
 # 进入生成的文件夹
 cd docs/.vuepress/dist
@@ -13,7 +13,8 @@ git init
 git add -A
 git commit -m 'deploy'
 
-# 或者 https://github.com/lxysy/vuepress-notes.git
+# 如 SSH 被墙，可改用 https 方式推送
+# git push -f https://github.com/lxysy/vuepress-notes.git master:gh-pages
 git push -f git@github.com:lxysy/vuepress-notes.git master:gh-pages
 
 cd -

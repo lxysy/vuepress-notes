@@ -35,6 +35,12 @@ module.exports = {
         shape: "star", // ['star' | 'circle'], // shape of the particle, default: 'star'
         zIndex: 999999999, // z-index property of the canvas, default: 999999999
       },
+    ],
+    [
+      "mermaidjs",
+      {
+        theme: "default",
+      }
     ]
   ],
 
@@ -42,8 +48,8 @@ module.exports = {
    * Type is `DefaultThemeConfig`
    */
   themeConfig: {
-    logo: '/avator1.png',
-    authorAvatar: '/avator1.png',
+    logo: '/toji.png',
+    authorAvatar: '/toji.png',
     // 自动生成侧边栏
     subSidebar:'auto',
     author: "FYShawn",
