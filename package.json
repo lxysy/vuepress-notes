@@ -11,14 +11,15 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.7",
+    "cross-env": "^10.1.0",
     "vuepress-plugin-cursor-effects": "^1.1.6",
     "vuepress-plugin-mermaidjs": "^2.0.0-beta.2",
     "vuepress-plugin-sakura": "^1.2.1",
     "vuepress-theme-reco": "1.6.17"
   },
   "scripts": {
-    "docs:dev": "NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
-    "docs:build": "NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",
+    "docs:dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
+    "docs:build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
