@@ -48,8 +48,8 @@ module.exports = {
    * Type is `DefaultThemeConfig`
    */
   themeConfig: {
-    logo: '/toji.png',
-    authorAvatar: '/toji.png',
+    logo: '/toji.jpg',
+    authorAvatar: '/toji.jpg',
     // 自动生成侧边栏
     subSidebar:'auto',
     author: "FYShawn",
