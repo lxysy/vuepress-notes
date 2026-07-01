@@ -15,6 +15,13 @@ module.exports = {
     },
   },
 
+  // Markdown 配置
+  markdown: {
+    extendMarkdown: md => {
+      md.use(require('./mermaid/markdown-it-mermaid'));
+    }
+  },
+
   // 插件
   plugins: [
     [
@@ -36,12 +43,6 @@ module.exports = {
         zIndex: 999999999, // z-index property of the canvas, default: 999999999
       },
     ],
-    [
-      "mermaidjs",
-      {
-        theme: "default",
-      }
-    ]
   ],
 
   /**
