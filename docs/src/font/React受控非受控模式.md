@@ -24,7 +24,7 @@ tags:
 
 
 
-![React受控非受控1](./img/React受控非受控1.svg)
+![React受控非受控1](./img/react-controlled-uncontrolled-1.svg)
 
 代码设置表单的初始 value，但是能改变 value 的只有用户，代码通过监听 onChange 来拿到最新的值，或者通过 ref 拿到 dom 之后读取 value。
 
