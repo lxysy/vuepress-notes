@@ -1,5 +1,5 @@
 ---
-title: Hook的闭包陷阱原因和解决方案
+title: React组件类型ts声明写法
 date: 2026-07-01
 categories:
   - 框架
@@ -458,7 +458,7 @@ interface CccProps {
 }
 ```
 
-**总结：**
+### **总结：**
 
 - **ReactNode**：JSX 的类型，一般用 ReactNode，但要知道 ReactNode、ReactElement、JSX.Element 的关系
 - **FunctionComonent**：也可以写 FC，第一个类型参数是 props 的类型
