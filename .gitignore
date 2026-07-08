@@ -1,3 +1,5 @@
 node_modules
 docs/.vuepress/dist
 .playwright-mcp/
+*.stackdump
+.claude/scheduled_tasks.lock
