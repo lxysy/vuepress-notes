@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>大模型tool调用 | 笔记</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="笔记">
+    
+    <link rel="preload" href="/vuepress-notes/assets/css/0.styles.441a784a.css" as="style"><link rel="preload" href="/vuepress-notes/assets/js/app.426ecfbc.js" as="script"><link rel="preload" href="/vuepress-notes/assets/js/3.d98ed6b1.js" as="script"><link rel="preload" href="/vuepress-notes/assets/js/1.58ddb03c.js" as="script"><link rel="preload" href="/vuepress-notes/assets/js/12.63689e73.js" as="script"><link rel="prefetch" href="/vuepress-notes/assets/js/10.ca64d60d.js"><link rel="prefetch" href="/vuepress-notes/assets/js/11.508c91f9.js"><link rel="prefetch" href="/vuepress-notes/assets/js/13.c0ea6417.js"><link rel="prefetch" href="/vuepress-notes/assets/js/14.6d31f1db.js"><link rel="prefetch" href="/vuepress-notes/assets/js/15.e1fd576f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/16.d1cdbc89.js"><link rel="prefetch" href="/vuepress-notes/assets/js/17.416c4271.js"><link rel="prefetch" href="/vuepress-notes/assets/js/18.19147f9f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/19.e9304040.js"><link rel="prefetch" href="/vuepress-notes/assets/js/20.919c3e2b.js"><link rel="prefetch" href="/vuepress-notes/assets/js/21.0001fb3e.js"><link rel="prefetch" href="/vuepress-notes/assets/js/22.9e94cbbe.js"><link rel="prefetch" href="/vuepress-notes/assets/js/23.7224889b.js"><link rel="prefetch" href="/vuepress-notes/assets/js/24.51ad4fc1.js"><link rel="prefetch" href="/vuepress-notes/assets/js/25.cb787c61.js"><link rel="prefetch" href="/vuepress-notes/assets/js/26.a2f8fff3.js"><link rel="prefetch" href="/vuepress-notes/assets/js/27.3575dbea.js"><link rel="prefetch" href="/vuepress-notes/assets/js/28.e0dcd3a1.js"><link rel="prefetch" href="/vuepress-notes/assets/js/29.dff6fa38.js"><link rel="prefetch" href="/vuepress-notes/assets/js/30.fe1603c0.js"><link rel="prefetch" href="/vuepress-notes/assets/js/31.2bb003e0.js"><link rel="prefetch" href="/vuepress-notes/assets/js/32.bd587b3d.js"><link rel="prefetch" href="/vuepress-notes/assets/js/33.abe6f933.js"><link rel="prefetch" href="/vuepress-notes/assets/js/34.4d9c442c.js"><link rel="prefetch" href="/vuepress-notes/assets/js/35.cb83b30d.js"><link rel="prefetch" href="/vuepress-notes/assets/js/36.f0de5877.js"><link rel="prefetch" href="/vuepress-notes/assets/js/4.a1ad2e96.js"><link rel="prefetch" href="/vuepress-notes/assets/js/5.323a0d3c.js"><link rel="prefetch" href="/vuepress-notes/assets/js/6.1900cb96.js"><link rel="prefetch" href="/vuepress-notes/assets/js/7.7888a11d.js"><link rel="prefetch" href="/vuepress-notes/assets/js/8.d360a8b5.js"><link rel="prefetch" href="/vuepress-notes/assets/js/9.95063a2f.js">
+    <link rel="stylesheet" href="/vuepress-notes/assets/css/0.styles.441a784a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>笔记</h3> <p class="description" data-v-59e6cb88>笔记</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>FYShawn</span>
+          
+        <!---->
+        2026
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-notes/" class="home-link router-link-active"><img src="/vuepress-notes/toji.jpg" alt="笔记" class="logo"> <span class="site-name">笔记</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-notes/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/langchain/" class="nav-link"><i class="undefined"></i>
+  langchain
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AI/" class="nav-link"><i class="undefined"></i>
+  AI
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/Claude Code/" class="nav-link"><i class="undefined"></i>
+  Claude Code
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/构建工具/" class="nav-link"><i class="undefined"></i>
+  构建工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/框架/" class="nav-link"><i class="undefined"></i>
+  框架
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/rxjs/" class="nav-link"><i class="undefined"></i>
+  rxjs
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/ant-design-pro/" class="nav-link"><i class="undefined"></i>
+  ant-design-pro
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/angular/" class="nav-link"><i class="undefined"></i>
+  angular
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/electron/" class="nav-link"><i class="undefined"></i>
+  electron
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/mdbook/" class="nav-link"><i class="undefined"></i>
+  mdbook
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/离线文档/" class="nav-link"><i class="undefined"></i>
+  离线文档
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/可视化/" class="nav-link"><i class="undefined"></i>
+  可视化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AntV G6/" class="nav-link"><i class="undefined"></i>
+  AntV G6
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue/" class="nav-link"><i class="undefined"></i>
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue原理/" class="nav-link"><i class="undefined"></i>
+  vue原理
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/D3.js/" class="nav-link"><i class="undefined"></i>
+  D3.js
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/下载依赖上传私有npm源/" class="nav-link"><i class="undefined"></i>
+  下载依赖上传私有npm源
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/面试/" class="nav-link"><i class="undefined"></i>
+  面试
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/垃圾回收/" class="nav-link"><i class="undefined"></i>
+  垃圾回收
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/GC/" class="nav-link"><i class="undefined"></i>
+  GC
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      FYShawn 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/1838800372241005" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/lxysy" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-notes/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-notes/toji.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    FYShawn
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>26</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>29</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-notes/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/langchain/" class="nav-link"><i class="undefined"></i>
+  langchain
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AI/" class="nav-link"><i class="undefined"></i>
+  AI
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/Claude Code/" class="nav-link"><i class="undefined"></i>
+  Claude Code
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/构建工具/" class="nav-link"><i class="undefined"></i>
+  构建工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/框架/" class="nav-link"><i class="undefined"></i>
+  框架
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/rxjs/" class="nav-link"><i class="undefined"></i>
+  rxjs
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/ant-design-pro/" class="nav-link"><i class="undefined"></i>
+  ant-design-pro
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/angular/" class="nav-link"><i class="undefined"></i>
+  angular
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/electron/" class="nav-link"><i class="undefined"></i>
+  electron
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/mdbook/" class="nav-link"><i class="undefined"></i>
+  mdbook
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/离线文档/" class="nav-link"><i class="undefined"></i>
+  离线文档
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/可视化/" class="nav-link"><i class="undefined"></i>
+  可视化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AntV G6/" class="nav-link"><i class="undefined"></i>
+  AntV G6
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue/" class="nav-link"><i class="undefined"></i>
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue原理/" class="nav-link"><i class="undefined"></i>
+  vue原理
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/D3.js/" class="nav-link"><i class="undefined"></i>
+  D3.js
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/下载依赖上传私有npm源/" class="nav-link"><i class="undefined"></i>
+  下载依赖上传私有npm源
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/面试/" class="nav-link"><i class="undefined"></i>
+  面试
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/垃圾回收/" class="nav-link"><i class="undefined"></i>
+  垃圾回收
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/GC/" class="nav-link"><i class="undefined"></i>
+  GC
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      FYShawn 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/1838800372241005" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/lxysy" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-notes/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>大模型tool调用</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>FYShawn</span>
+          
+        <!---->
+        2026
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">大模型tool调用</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>FYShawn</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2026/7/8</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>langchain</span><span class="tag-item" data-v-8a445198>ai tool</span></i></div></div> <div class="theme-reco-content content__default"><h3 id="langchain"><a href="#langchain" class="header-anchor">#</a> langchain</h3> <p>LangChain是一个由大型语言模型 (LLM) 驱动的应用程序开发框架。</p> <p>简单来说，大模型本身是不会调用工具的，那么类似cursor是如何写文件、读文件、新建项目</p> <p>这里使用到了 @langchain/openai 包，是 LangChain 框架提供的 OpenAI 兼容接口封装:</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// dotenv: 用于从 .env 文件加载环境变量到 process.env</span>
+<span class="token comment">// 这样可以把 API Key 等敏感信息放在 .env 文件中，不提交到代码仓库</span>
+<span class="token keyword">import</span> dotenv <span class="token keyword">from</span> <span class="token string">&quot;dotenv&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ChatOpenAI: 来自 @langchain/openai 包，是 LangChain 框架提供的 OpenAI 兼容接口封装</span>
+<span class="token comment">// 用于创建与大语言模型交互的客户端，支持 OpenAI API 格式的模型（如 GPT、通义千问等）</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ChatOpenAI <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/openai&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 加载 .env 文件中的环境变量（如 API Key、Base URL、模型名称等）</span>
+dotenv<span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建模型实例，配置 OpenAI 兼容的 API 客户端</span>
+<span class="token keyword">const</span> model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ChatOpenAI</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token comment">// 模型名称，优先从环境变量读取，否则使用默认值</span>
+  <span class="token literal-property property">modelName</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">MODEL_NAME</span> <span class="token operator">||</span> <span class="token string">&quot;deepseek-v4-flash&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// API 密钥，从环境变量中读取</span>
+  <span class="token literal-property property">apiKey</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_API_KEY</span><span class="token punctuation">,</span>
+  <span class="token comment">// 自定义配置，这里设置了请求的 Base URL</span>
+  <span class="token literal-property property">configuration</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">baseURL</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_BASE_URL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 调用模型，传入提示词 &quot;介绍下自己&quot;，等待模型返回结果</span>
+<span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> model<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token string">&quot;介绍下自己&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 打印模型的回复内容（文本部分）</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20260708200848833.1408d581.png" alt="image-20260708200848833"></p> <p>这样就实现了模型的调用</p> <h3 id="读取文件tool"><a href="#读取文件tool" class="header-anchor">#</a> 读取文件tool</h3> <p>来实现一个tool,让大模型去读文件</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// ============================================================</span>
+<span class="token comment">// 1. 导入依赖 —— 加载环境变量、LangChain 核心模块、文件系统和 Zod 校验</span>
+<span class="token comment">// ============================================================</span>
+<span class="token keyword">import</span> <span class="token string">&quot;dotenv/config&quot;</span><span class="token punctuation">;</span>                               <span class="token comment">// 加载 .env 文件中的环境变量</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ChatOpenAI <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/openai&quot;</span><span class="token punctuation">;</span>       <span class="token comment">// OpenAI 兼容的聊天模型接口</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> tool <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/tools&quot;</span><span class="token punctuation">;</span>         <span class="token comment">// 创建工具的高阶函数</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+  HumanMessage<span class="token punctuation">,</span>                                       <span class="token comment">// 用户消息</span>
+  SystemMessage<span class="token punctuation">,</span>                                      <span class="token comment">// 系统提示消息</span>
+  ToolMessage<span class="token punctuation">,</span>                                        <span class="token comment">// 工具返回结果消息</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/messages&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> fs <span class="token keyword">from</span> <span class="token string">&quot;node:fs/promises&quot;</span><span class="token punctuation">;</span>                    <span class="token comment">// 异步文件系统 API</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> z <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;zod&quot;</span><span class="token punctuation">;</span>                              <span class="token comment">// 参数校验库</span>
+
+<span class="token comment">// ============================================================</span>
+<span class="token comment">// 2. 初始化模型 —— 配置 LLM 客户端</span>
+<span class="token comment">// ============================================================</span>
+<span class="token keyword">const</span> model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ChatOpenAI</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">modelName</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">MODEL_NAME</span> <span class="token operator">||</span> <span class="token string">&quot;deepseek-v4-flash&quot;</span><span class="token punctuation">,</span>  <span class="token comment">// 模型名称</span>
+  <span class="token literal-property property">apiKey</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_API_KEY</span><span class="token punctuation">,</span>                       <span class="token comment">// API 密钥</span>
+  <span class="token literal-property property">temperature</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>                                            <span class="token comment">// 温度设为 0，保证输出确定性</span>
+  <span class="token literal-property property">configuration</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">baseURL</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_BASE_URL</span><span class="token punctuation">,</span>                    <span class="token comment">// 兼容 OpenAI API 的自定义地址</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ============================================================</span>
+<span class="token comment">// 3. 定义工具 —— read_file：让 LLM 能读取本地文件</span>
+<span class="token comment">// ============================================================</span>
+<span class="token keyword">const</span> readFileTool <span class="token operator">=</span> <span class="token function">tool</span><span class="token punctuation">(</span>
+  <span class="token comment">// 工具执行函数：接收文件路径，读取并返回文件内容</span>
+  <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> filePath <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> content <span class="token operator">=</span> <span class="token keyword">await</span> fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span>filePath<span class="token punctuation">,</span> <span class="token string">&quot;utf-8&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 以 UTF-8 读取文件</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>
+      <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">  [工具调用] read_file(&quot;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>filePath<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&quot;) - 成功读取 </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>content<span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> 字节</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">文件内容:\n</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>content<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;read_file&quot;</span><span class="token punctuation">,</span>                                      <span class="token comment">// 工具名，模型通过它引用</span>
+    <span class="token literal-property property">description</span><span class="token operator">:</span>
+      <span class="token string">&quot;用此工具来读取文件内容。当用户要求读取文件、查看代码、分析文件内容时，调用此工具。输入文件路径（可以是相对路径或绝对路径）。&quot;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">schema</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>                                      <span class="token comment">// 参数校验规则</span>
+      <span class="token literal-property property">filePath</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;要读取的文件路径&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ============================================================</span>
+<span class="token comment">// 4. 工具注册与消息准备</span>
+<span class="token comment">// ============================================================</span>
+<span class="token keyword">const</span> tools <span class="token operator">=</span> <span class="token punctuation">[</span>readFileTool<span class="token punctuation">]</span><span class="token punctuation">;</span>                              <span class="token comment">// 工具列表（可扩展）</span>
+
+<span class="token comment">// 将工具绑定到模型 —— 模型在回答中可以主动请求调用这些工具</span>
+<span class="token keyword">const</span> modelWithTools <span class="token operator">=</span> model<span class="token punctuation">.</span><span class="token function">bindTools</span><span class="token punctuation">(</span>tools<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 构建对话消息列表：</span>
+<span class="token comment">//   SystemMessage → 设定 AI 助手的行为和可用工具</span>
+<span class="token comment">//   HumanMessage  → 用户的提问</span>
+<span class="token keyword">const</span> messages <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token keyword">new</span> <span class="token class-name">SystemMessage</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">你是一个代码助手，可以使用工具读取文件并解释代码。
+
+工作流程：
+1. 用户要求读取文件时，立即调用 read_file 工具
+2. 等待工具返回文件内容
+3. 基于文件内容进行分析和解释
+
+可用工具：
+- read_file: 读取文件内容（使用此工具来获取文件内容）
+</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">HumanMessage</span><span class="token punctuation">(</span><span class="token string">&quot;请读取 ./src/tool-file-read.mjs 文件内容并解释代码&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ============================================================</span>
+<span class="token comment">// 5. 工具调用循环（ReAct 模式）</span>
+<span class="token comment">//    模型返回后，检查是否需要调用工具；如果是，执行工具并将结果喂回模型，</span>
+<span class="token comment">//    重复此过程直到模型直接回复最终内容。</span>
+<span class="token comment">// ============================================================</span>
+<span class="token keyword">let</span> response <span class="token operator">=</span> <span class="token keyword">await</span> modelWithTools<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>messages<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 首次调用模型</span>
+<span class="token comment">// console.log(response);</span>
+
+messages<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>                                    <span class="token comment">// 将模型响应加入历史</span>
+
+<span class="token comment">// 当模型返回 tool_calls 时，说明它想调用工具</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span>tool_calls <span class="token operator">&amp;&amp;</span> response<span class="token punctuation">.</span>tool_calls<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">\n[检测到 </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>response<span class="token punctuation">.</span>tool_calls<span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> 个工具调用]</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 并行执行本次所有工具调用（Promise.all 并发）</span>
+  <span class="token keyword">const</span> toolResults <span class="token operator">=</span> <span class="token keyword">await</span> Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span>
+    response<span class="token punctuation">.</span>tool_calls<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">toolCall</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 根据工具名找到对应工具实例</span>
+      <span class="token keyword">const</span> tool <span class="token operator">=</span> tools<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">t</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> t<span class="token punctuation">.</span>name <span class="token operator">===</span> toolCall<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>tool<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">错误: 找不到工具 </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>toolCall<span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>
+        <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">  [执行工具] </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>toolCall<span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">(</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>toolCall<span class="token punctuation">.</span>args<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> tool<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>toolCall<span class="token punctuation">.</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 执行工具函数</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">错误: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>error<span class="token punctuation">.</span>message<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>                   <span class="token comment">// 异常时返回错误信息而非中断</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 将每个工具调用的结果包装成 ToolMessage 追加到消息历史</span>
+  response<span class="token punctuation">.</span>tool_calls<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">toolCall<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    messages<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+      <span class="token keyword">new</span> <span class="token class-name">ToolMessage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token literal-property property">content</span><span class="token operator">:</span> toolResults<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">,</span>                       <span class="token comment">// 工具返回的内容</span>
+        <span class="token literal-property property">tool_call_id</span><span class="token operator">:</span> toolCall<span class="token punctuation">.</span>id<span class="token punctuation">,</span>                         <span class="token comment">// 关联到对应的工具调用</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 再次调用模型，让它基于工具返回的结果给出最终回答</span>
+  response <span class="token operator">=</span> <span class="token keyword">await</span> modelWithTools<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>messages<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ============================================================</span>
+<span class="token comment">// 6. 输出最终回复</span>
+<span class="token comment">// ============================================================</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;\n[最终回复]&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>                            <span class="token comment">// 打印模型的最终回答</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20260708204151469.a4e7abe1.png" alt="image-20260708204151469"></p> <p>这里看到模型成功调用工具读取了文件</p> <p><strong>工作流程</strong>：</p> <ol><li><strong>首次调用</strong>模型 → 模型判断需要调用 <code>read_file</code> 工具，返回 <code>tool_calls</code></li> <li><strong>进入循环</strong> → 检测到 <code>tool_calls</code></li> <li><strong>并行执行工具</strong> → 使用 <code>Promise.all</code> 并发执行所有工具调用</li> <li><strong>记录结果</strong> → 将每个工具的结果包装成 <code>ToolMessage</code> 加入消息历史</li> <li><strong>再次调用模型</strong> → 模型拿到工具返回的内容后，可以生成最终回答</li> <li><strong>循环结束</strong> → 当模型不再请求调用工具时，跳出循环</li></ol> <blockquote><p><strong>异常处理</strong>：工具执行出错时，捕获异常并返回错误信息字符串，而不是直接抛出异常导致程序崩溃。</p></blockquote> <p>这里提一下定义工具的tool函数用法：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token function">tool</span><span class="token punctuation">(</span>
+  <span class="token comment">// 参数1：工具执行函数 (必需)</span>
+  <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// input 是经过 schema 校验后的对象</span>
+    <span class="token comment">// 返回值（字符串）作为工具结果回传给 LLM</span>
+    <span class="token keyword">return</span> <span class="token string">&quot;结果内容&quot;</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// 参数2：工具配置 (必需)</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;工具名&quot;</span><span class="token punctuation">,</span>        <span class="token comment">// 字符串，模型通过此名称引用</span>
+    <span class="token literal-property property">description</span><span class="token operator">:</span> <span class="token string">&quot;描述&quot;</span><span class="token punctuation">,</span>   <span class="token comment">// 告诉 LLM 何时以及如何使用该工具</span>
+    <span class="token literal-property property">schema</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>     <span class="token comment">// Zod 校验，定义工具参数结构</span>
+      <span class="token literal-property property">filePath</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;参数说明&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul><li><strong>第一个参数是异步函数</strong>，接收 Zod schema 校验后的参数对象</li> <li><strong>返回值必须是字符串</strong>（或可序列化的内容），作为 LLM 的上下文</li> <li><strong><code>description</code> 要写清楚</strong>，LLM 靠它判断何时调用</li> <li><strong><code>schema</code> 用 Zod 定义</strong>，自动校验参数类型并提供错误提示</li> <li>工具执行出错时第 103 行有 try/catch 容错，不中断流程</li></ul> <p>我们首次调用模型后的返回结果如下：</p> <div class="language-json extra-class"><pre class="language-json"><code>AIMessage <span class="token punctuation">{</span>
+  <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;8635abd6-76eb-4849-8046-91dd13f1814d&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;content&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;additional_kwargs&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;tool_calls&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">&quot;index&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;call_00_Chma9Xcwbf2zF88AEhUG2014&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;function&quot;</span><span class="token punctuation">,</span>
+        <span class="token property">&quot;function&quot;</span><span class="token operator">:</span> <span class="token string">&quot;[Object]&quot;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;reasoning_content&quot;</span><span class="token operator">:</span> <span class="token string">&quot;用户要求读取文件并解释代码，我需要先调用 read_file 工具读取文件内容。&quot;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;response_metadata&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;tokenUsage&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">&quot;promptTokens&quot;</span><span class="token operator">:</span> <span class="token number">428</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;completionTokens&quot;</span><span class="token operator">:</span> <span class="token number">71</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;totalTokens&quot;</span><span class="token operator">:</span> <span class="token number">499</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;finish_reason&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tool_calls&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;model_provider&quot;</span><span class="token operator">:</span> <span class="token string">&quot;openai&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;model_name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;deepseek-v4-flash&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;usage&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">&quot;prompt_tokens&quot;</span><span class="token operator">:</span> <span class="token number">428</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;completion_tokens&quot;</span><span class="token operator">:</span> <span class="token number">71</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;total_tokens&quot;</span><span class="token operator">:</span> <span class="token number">499</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;prompt_tokens_details&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;cached_tokens&quot;</span><span class="token operator">:</span> <span class="token number">384</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;completion_tokens_details&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;reasoning_tokens&quot;</span><span class="token operator">:</span> <span class="token number">19</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;prompt_cache_hit_tokens&quot;</span><span class="token operator">:</span> <span class="token number">384</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;prompt_cache_miss_tokens&quot;</span><span class="token operator">:</span> <span class="token number">44</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;system_fingerprint&quot;</span><span class="token operator">:</span> <span class="token string">&quot;fp_8b330d02d0_prod0820_fp8_kvcache_20260402&quot;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;tool_calls&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;read_file&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;args&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">&quot;filePath&quot;</span><span class="token operator">:</span> <span class="token string">&quot;./src/tool-file-read.mjs&quot;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tool_call&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;call_00_Chma9Xcwbf2zF88AEhUG2014&quot;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;invalid_tool_calls&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;usage_metadata&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;output_tokens&quot;</span><span class="token operator">:</span> <span class="token number">71</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;input_tokens&quot;</span><span class="token operator">:</span> <span class="token number">428</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;total_tokens&quot;</span><span class="token operator">:</span> <span class="token number">499</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;input_token_details&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">&quot;cache_read&quot;</span><span class="token operator">:</span> <span class="token number">384</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;output_token_details&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">&quot;reasoning&quot;</span><span class="token operator">:</span> <span class="token number">19</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>可以看到，ai返回的消息是AIMessage实例，实际上具体的消息有四种：</p> <ul><li>HumanMessage     用户输入的信息</li> <li>SystemMessage     设置AI的信息，可以干什么，有什么能力，以及行为规范</li> <li>AIMessage               AI回复的消息</li> <li>ToolMessage           调用工具的结果返回</li></ul> <h3 id="mini-cursor"><a href="#mini-cursor" class="header-anchor">#</a> mini cursor</h3> <p>目标拓展之前的tool，实现执行命令、创建目录、读取文件、写文件等</p> <p>![](img/mini cursor.png)</p> <h4 id="执行命令tool"><a href="#执行命令tool" class="header-anchor">#</a> 执行命令tool</h4> <p>关于在node中执行命令，参考child_process这个内置模块</p> <p>补充下用法：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> spawn <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;node:child_process&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> child <span class="token operator">=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>command<span class="token punctuation">,</span> args<span class="token punctuation">,</span> options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><table><thead><tr><th>参数</th> <th>说明</th></tr></thead> <tbody><tr><td><code>command</code></td> <td>要执行的命令（如 <code>&quot;pnpm&quot;</code>、<code>&quot;echo&quot;</code>）</td></tr> <tr><td><code>args</code></td> <td>命令参数数组（如 <code>[&quot;create&quot;, &quot;vite&quot;, ...]</code>）</td></tr> <tr><td><code>options</code></td> <td>配置对象（cwd、shell、stdio、env 等）</td></tr></tbody></table> <p><strong>返回值</strong>是一个 <code>ChildProcess</code> 对象（也是一个 <code>EventEmitter</code>），你可以监听它的事件。</p> <p>然后实现执行命令的tool：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 导入</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> spawn <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;node:child_process&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 完整的命令行字符串</span>
+<span class="token keyword">const</span> command <span class="token operator">=</span>
+  <span class="token string">'echo -e &quot;n\nn&quot; | pnpm create vite react-todo-app --template react-ts'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 拆解为 [命令, 参数1, 参数2, ...]</span>
+<span class="token keyword">const</span> <span class="token punctuation">[</span>cmd<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">]</span> <span class="token operator">=</span> command<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&quot; &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// cmd  = &quot;echo&quot;</span>
+<span class="token comment">// args = [&quot;-e&quot;, `&quot;n\nn&quot;`, &quot;|&quot;, &quot;pnpm&quot;, &quot;create&quot;, &quot;vite&quot;, &quot;react-todo-app&quot;, &quot;--template&quot;, &quot;react-ts&quot;]</span>
+
+<span class="token comment">// 启动子进程</span>
+<span class="token keyword">const</span> child <span class="token operator">=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> args<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  cwd<span class="token punctuation">,</span> <span class="token comment">// 工作目录</span>
+  <span class="token literal-property property">stdio</span><span class="token operator">:</span> <span class="token string">&quot;inherit&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 子进程的 stdin/stdout/stderr 直接继承父进程（实时输出到控制台）</span>
+  <span class="token literal-property property">shell</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 通过 shell 执行（这样才支持 | 管道、echo 等 shell 特性）</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 监听错误（比如命令不存在）</span>
+child<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;error&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  errorMsg <span class="token operator">=</span> error<span class="token punctuation">.</span>message<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 监听进程退出，根据退出码决定父进程的退出</span>
+child<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;close&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">code</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>code <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    process<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 成功</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    process<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span>code <span class="token operator">||</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 失败</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><strong>关键点</strong></p> <p><strong>1. <code>spawn</code> vs <code>exec</code> — 为什么这里用 spawn？</strong></p> <table><thead><tr><th></th> <th><code>spawn</code></th> <th><code>exec</code></th></tr></thead> <tbody><tr><td>返回方式</td> <td><strong>流式</strong>（stdout/stderr 是 Stream）</td> <td><strong>回调式</strong>（一次性返回全部输出）</td></tr> <tr><td>输出量</td> <td>适合大量数据</td> <td>有最大缓冲区（默认 1MB，超了会报错）</td></tr> <tr><td>使用场景</td> <td>长时间运行的进程、大量输出、需实时看日志</td> <td>简短命令、需要一次性拿到全部输出结果</td></tr></tbody></table> <p><strong>你的用例很适合 spawn</strong>：<code>pnpm create vite</code> 是一个交互式命令，需要实时看到进度输出，而不是等它跑完再一次性打印。</p> <p><strong>2. <code>shell: true</code> 的作用</strong></p> <p>没有 <code>shell: true</code>，<code>spawn(&quot;echo&quot;, [&quot;-e&quot;,</code>&quot;n\nn&quot;<code>])</code> 会直接执行 <code>echo</code> 程序，<strong>管道 <code>|</code> 是 shell 语法，不会被识别</strong>。加上 <code>shell: true</code> 后，实际执行的是：</p> <div class="language- extra-class"><pre class="language-text"><code>cmd /C echo -e &quot;n\nn&quot; | pnpm create vite react-todo-app --template react-ts
+</code></pre></div><p>（Windows 下默认用 <code>cmd.exe</code>，Linux/macOS 用 <code>/bin/sh</code>）</p> <p><strong>3. <code>stdio: &quot;inherit&quot;</code> 的作用</strong></p> <p>子进程的 3 个标准流直接映射到父进程的控制台：</p> <ul><li>你在终端看到的 <code>pnpm create vite</code> 的输出<strong>实时打印</strong>出来</li> <li>子进程也从同一个终端读取输入（所以交互式提示也能正常工作）</li></ul> <p><strong>4. 事件监听</strong></p> <table><thead><tr><th>事件</th> <th>触发时机</th></tr></thead> <tbody><tr><td><code>error</code></td> <td>进程<strong>启动失败</strong>（比如命令不存在、权限不足）</td></tr> <tr><td><code>close</code></td> <td>进程<strong>已退出</strong>且所有 stdio 流已关闭，这时拿到退出码 <code>code</code></td></tr></tbody></table> <p><code>code === 0</code> 表示成功，非零值表示失败（不同的数字对应不同的错误类型）。</p> <p>由于以上第二点中提到，<strong>在 Windows 的 cmd.exe 下</strong>：</p> <ul><li><strong><code>echo</code> 不支持 <code>-e</code> 参数</strong>——cmd 的 echo 就是 <code>echo</code>，它会原样输出 <code>-e</code></li> <li><strong><code>\n</code> 不会被解释为换行</strong>——Windows cmd 里 <code>\n</code> 就是字面反斜杠 + n</li> <li><strong>管道 <code>|</code> 的行为可能也不一样</strong></li></ul> <p>所以在 Windows 上，实际执行的效果约等于：</p> <div class="language- extra-class"><pre class="language-text"><code>cmd /C echo -e &quot;n\nn&quot; | pnpm create vite ...
+</code></pre></div><p>这里实际是想通过管道模拟用户输入</p> <p>windows下修改如下：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 导入</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> spawn <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;node:child_process&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 完整的命令行字符串</span>
+<span class="token comment">// echo. — Windows 下输出空行， &amp; 在 cmd 里依次执行多个命令， 但管道 | 优先级高于 &amp;</span>
+<span class="token keyword">const</span> command <span class="token operator">=</span> <span class="token string">'echo. &amp; echo. | pnpm create vite react-todo-app --template react-ts'</span>
+  <span class="token comment">// 'echo -e &quot;n\nn&quot; | pnpm create vite react-todo-app --template react-ts';</span>
+<span class="token comment">// 返回 Node.js 进程的当前工作目录（current working directory）的绝对路径</span>
+<span class="token keyword">const</span> cwd <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token function">cwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 拆解为 [命令, 参数1, 参数2, ...]</span>
+<span class="token keyword">const</span> <span class="token punctuation">[</span>cmd<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">]</span> <span class="token operator">=</span> command<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&quot; &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// cmd  = &quot;echo&quot;</span>
+<span class="token comment">// args = [&quot;-e&quot;, `&quot;n\nn&quot;`, &quot;|&quot;, &quot;pnpm&quot;, &quot;create&quot;, &quot;vite&quot;, &quot;react-todo-app&quot;, &quot;--template&quot;, &quot;react-ts&quot;]</span>
+
+<span class="token comment">// 启动子进程</span>
+<span class="token keyword">const</span> child <span class="token operator">=</span> <span class="token function">spawn</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> args<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  cwd<span class="token punctuation">,</span> <span class="token comment">// 工作目录</span>
+  <span class="token literal-property property">stdio</span><span class="token operator">:</span> <span class="token string">&quot;inherit&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 子进程的 stdin/stdout/stderr 直接继承父进程（实时输出到控制台）</span>
+  <span class="token literal-property property">shell</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 通过 shell 执行（这样才支持 | 管道、echo 等 shell 特性）</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 监听错误（比如命令不存在）</span>
+child<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;error&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  errorMsg <span class="token operator">=</span> error<span class="token punctuation">.</span>message<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 监听进程退出，根据退出码决定父进程的退出</span>
+child<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;close&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">code</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>code <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    process<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 成功</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    process<span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span>code <span class="token operator">||</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 失败</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><table><thead><tr><th>写法</th> <th>Windows 上实际执行的</th> <th>结果</th></tr></thead> <tbody><tr><td><code>echo -e &quot;n\nn&quot;</code></td> <td>输出字面量 <code>-e &quot;n\nn&quot;</code></td> <td>❌ pnpm 收到垃圾</td></tr> <tr><td><code>echo. &amp; echo.</code></td> <td>两个空行，其中一个通过管道送出</td> <td>✅ 一个 Enter 确认默认值</td></tr></tbody></table> <p>如果用 Unix/Linux 或 Git Bash 跑，原来的 <code>echo -e &quot;n\nn&quot;</code> 就没问题。但在 Windows cmd/PowerShell 下，就要用 <code>echo.</code> 这种 cmd 特有的语法。</p> <p>最后运行，已经成功执行命令：</p> <p><img src="img/image-20260708220101667.png" alt="image-20260708220101667"></p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8Btool%E8%B0%83%E7%94%A8.html#langchain" class="sidebar-link reco-side-langchain" data-v-b57cc07c>langchain</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8Btool%E8%B0%83%E7%94%A8.html#读取文件tool" class="sidebar-link reco-side-读取文件tool" data-v-b57cc07c>读取文件tool</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8Btool%E8%B0%83%E7%94%A8.html#mini-cursor" class="sidebar-link reco-side-mini-cursor" data-v-b57cc07c>mini cursor</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/vuepress-notes/assets/js/app.426ecfbc.js" defer></script><script src="/vuepress-notes/assets/js/3.d98ed6b1.js" defer></script><script src="/vuepress-notes/assets/js/1.58ddb03c.js" defer></script><script src="/vuepress-notes/assets/js/12.63689e73.js" defer></script>
+  </body>
+</html>
