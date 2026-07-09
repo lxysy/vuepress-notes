@@ -305,7 +305,7 @@ AIMessage {
 
 目标拓展之前的tool，实现执行命令、创建目录、读取文件、写文件等
 
-![](img/mini cursor.png)
+![](img/mini-cursor.png)
 
 #### 执行命令tool
 
@@ -470,3 +470,300 @@ child.on("close", (code) => {
 最后运行，已经成功执行命令：
 
 ![image-20260708220101667](img/image-20260708220101667.png)
+
+#### 封装所有tools
+
+接下来封装所有的tools
+
+```js
+import { tool } from '@langchain/core/tools';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { spawn } from 'node:child_process';
+import { z } from 'zod';
+
+// 1. 读取文件工具
+const readFileTool = tool(
+  async ({ filePath }) => {
+    try {
+      const content = await fs.readFile(filePath, 'utf-8');
+      console.log(`  [工具调用] read_file("${filePath}") - 成功读取 ${content.length} 字节`);
+      return `文件内容:\n${content}`;
+    } catch (error) {
+      console.log(`  [工具调用] read_file("${filePath}") - 错误: ${error.message}`);
+      return `读取文件失败: ${error.message}`;
+    }
+  },
+  {
+    name: 'read_file',
+    description: '读取指定路径的文件内容',
+    schema: z.object({
+      filePath: z.string().describe('文件路径'),
+    }),
+  }
+);
+
+// 2. 写入文件工具
+const writeFileTool = tool(
+  async ({ filePath, content }) => {
+    try {
+      const dir = path.dirname(filePath);
+      await fs.mkdir(dir, { recursive: true });
+      await fs.writeFile(filePath, content, 'utf-8');
+      console.log(`  [工具调用] write_file("${filePath}") - 成功写入 ${content.length} 字节`);
+      return `文件写入成功: ${filePath}`;
+    } catch (error) {
+      console.log(`  [工具调用] write_file("${filePath}") - 错误: ${error.message}`);
+      return `写入文件失败: ${error.message}`;
+    }
+  },
+  {
+    name: 'write_file',
+    description: '向指定路径写入文件内容，自动创建目录',
+    schema: z.object({
+      filePath: z.string().describe('文件路径'),
+      content: z.string().describe('要写入的文件内容'),
+    }),
+  }
+);
+
+// 3. 执行命令工具（带实时输出）
+// echo 在 windows 可能不支持，可以设置 shell: 'powershell.exe'
+const executeCommandTool = tool(
+  async ({ command, workingDirectory }) => {
+    const cwd = workingDirectory || process.cwd();
+    console.log(`  [工具调用] execute_command("${command}")${workingDirectory ? ` - 工作目录: ${workingDirectory}` : ''}`);
+
+    return new Promise((resolve, reject) => {
+      // 解析命令和参数
+      const [cmd, ...args] = command.split(' ');
+
+      const child = spawn(cmd, args, {
+        cwd,
+        stdio: 'inherit', // 实时输出到控制台
+        shell: 'powershell.exe',
+      });
+
+      let errorMsg = '';
+
+      child.on('error', (error) => {
+        errorMsg = error.message;
+      });
+
+      child.on('close', (code) => {
+        if (code === 0) {
+          console.log(`  [工具调用] execute_command("${command}") - 执行成功`);
+          const cwdInfo = workingDirectory
+            ? `\n\n重要提示：命令在目录 "${workingDirectory}" 中执行成功。如果需要在这个项目目录中继续执行命令，请使用 workingDirectory: "${workingDirectory}" 参数，不要使用 cd 命令。`
+            : '';
+          resolve(`命令执行成功: ${command}${cwdInfo}`);
+        } else {
+          console.log(`  [工具调用] execute_command("${command}") - 执行失败，退出码: ${code}`);
+          resolve(`命令执行失败，退出码: ${code}${errorMsg ? '\n错误: ' + errorMsg : ''}`);
+        }
+      });
+    });
+  },
+  {
+    name: 'execute_command',
+    description: '执行系统命令，支持指定工作目录，实时显示输出',
+    schema: z.object({
+      command: z.string().describe('要执行的命令'),
+      workingDirectory: z.string().optional().describe('工作目录（推荐指定）'),
+    }),
+  }
+);
+
+// 4. 列出目录内容工具
+const listDirectoryTool = tool(
+  async ({ directoryPath }) => {
+    try {
+      const files = await fs.readdir(directoryPath);
+      console.log(`  [工具调用] list_directory("${directoryPath}") - 找到 ${files.length} 个项目`);
+      return `目录内容:\n${files.map(f => `- ${f}`).join('\n')}`;
+    } catch (error) {
+      console.log(`  [工具调用] list_directory("${directoryPath}") - 错误: ${error.message}`);
+      return `列出目录失败: ${error.message}`;
+    }
+  },
+  {
+    name: 'list_directory',
+    description: '列出指定目录下的所有文件和文件夹',
+    schema: z.object({
+      directoryPath: z.string().describe('目录路径'),
+    }),
+  }
+);
+
+export { readFileTool, writeFileTool, executeCommandTool, listDirectoryTool };
+```
+
+这个文件包含所有的tools：
+
+- 读文件
+- 写文件（包含创建目录）
+- 读目录
+- 执行命令
+
+每个tool都是name、description以及基于zod申明的参数格式
+
+#### 调用所有tools
+
+```js
+// 启动时自动读取 .env 文件的内容，注入到 process.env
+import "dotenv/config";
+import { ChatOpenAI } from "@langchain/openai";
+import {
+  HumanMessage,
+  SystemMessage,
+  ToolMessage,
+} from "@langchain/core/messages";
+import {
+  executeCommandTool,
+  listDirectoryTool,
+  readFileTool,
+  writeFileTool,
+} from "./all-tools.mjs";
+import chalk from "chalk";
+
+const model = new ChatOpenAI({
+  modelName: "deepseek-v4-flash",
+  apiKey: process.env.OPENAI_API_KEY,
+  temperature: 0,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+});
+
+const tools = [
+  readFileTool,
+  writeFileTool,
+  executeCommandTool,
+  listDirectoryTool,
+];
+
+// 绑定工具到模型
+const modelWithTools = model.bindTools(tools);
+
+// Agent 执行函数
+async function runAgentWithTools(query, maxIterations = 30) {
+  const messages = [
+    new SystemMessage(`你是一个项目管理助手，使用工具完成任务。
+
+当前工作目录: ${process.cwd()}
+
+工具：
+1. read_file: 读取文件
+2. write_file: 写入文件
+3. execute_command: 执行命令（支持 workingDirectory 参数）
+4. list_directory: 列出目录
+
+重要规则 - execute_command：
+- workingDirectory 参数会自动切换到指定目录
+- 当使用 workingDirectory 时，绝对不要在 command 中使用 cd
+- 错误示例: { command: "cd react-todo-app && pnpm install", workingDirectory: "react-todo-app" }
+这是错误的！因为 workingDirectory 已经在 react-todo-app 目录了，再 cd react-todo-app 会找不到目录
+- 正确示例: { command: "pnpm install", workingDirectory: "react-todo-app" }
+这样就对了！workingDirectory 已经切换到 react-todo-app，直接执行命令即可
+- 新参数 input：传入 stdin 内容自动应答交互提示。示例: input: "\\n\\n"
+- 或使用 CI=true 环境变量跳过交互: command: "CI=true pnpm create vite my-app --template react-ts"
+
+重要规则 - write_file：
+- 当写入 React 组件文件（如 App.tsx）时，如果存在对应的 CSS 文件（如 App.css），在其他 import 语句后加上这个 css 的导入
+`),
+    new HumanMessage(query),
+  ];
+
+  for (let i = 0; i < maxIterations; i++) {
+    console.log(chalk.bgGreen(`⏳ 正在等待 AI 思考...`));
+    const response = await modelWithTools.invoke(messages);
+    messages.push(response);
+
+    // 检查是否有工具调用
+    if (!response.tool_calls || response.tool_calls.length === 0) {
+      console.log(`\n✨ AI 最终回复:\n${response.content}\n`);
+      return response.content;
+    }
+
+    // 执行工具调用
+    for (const toolCall of response.tool_calls) {
+      const foundTool = tools.find((t) => t.name === toolCall.name);
+      if (foundTool) {
+        const toolResult = await foundTool.invoke(toolCall.args);
+        messages.push(
+          new ToolMessage({
+            content: toolResult,
+            tool_call_id: toolCall.id,
+          }),
+        );
+      }
+    }
+  }
+
+  return messages[messages.length - 1].content;
+}
+
+const case1 = `创建一个功能丰富的 React TodoList 应用：
+
+1. 创建项目：pnpm create vite react-todo-app --template react-ts --eslint --immediate
+2. 修改 src/App.tsx，实现完整功能的 TodoList：
+ - 添加、删除、编辑、标记完成
+ - 分类筛选（全部/进行中/已完成）
+ - 统计信息显示
+ - localStorage 数据持久化
+3. 添加复杂样式：
+ - 渐变背景（蓝到紫）
+ - 卡片阴影、圆角
+ - 悬停效果
+4. 添加动画：
+ - 添加/删除时的过渡动画
+ - 使用 CSS transitions
+5. 列出目录确认
+
+注意：使用 pnpm，功能要完整，样式要美观，要有动画效果
+
+之后在 react-todo-app 项目中：
+1. 使用 pnpm install 安装依赖
+2. 使用 pnpm run dev 启动服务器
+`;
+
+try {
+  await runAgentWithTools(case1);
+} catch (error) {
+  console.error(`\n❌ 错误: ${error.message}\n`);
+}
+```
+
+整体流程：
+
+```js
+.env 文件
+   ↓ dotenv/config 注入
+process.env  ← API Key + Base URL
+   ↓
+ChatOpenAI 模型  ── 绑定工具 ──→ modelWithTools
+                                     │
+                                     ↓
+                           runAgentWithTools(query)
+
+```
+
+核心循环就是一个ReAct模式的while循环
+
+```js
+  用户输入 query
+        ↓
+   模型收到 SystemMessage + query
+        ↓
+   模型返回 → 有 tool_calls? ──是──→ 执行对应工具 → 结果放回 messages → 下一轮
+        ↓ 否                      ↑
+   输出最终回复 ←─────────────── 最多 30 轮
+```
+
+运行代码后结果如下：
+
+![image-20260709162338855](img/image-20260709162338855.png)
+
+这里看到大模型成功调用了我们的工具，且启动运行了项目：
+
+![image-20260709162454025](img/image-20260709162454025.png)
