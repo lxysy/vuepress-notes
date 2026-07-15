@@ -1,3 +1,16 @@
+---
+title: MCP-可跨进程调用的tool
+date: 2026-07-08
+categories:
+  - AI
+  - Claude Code
+tags:
+  - Claude Code
+  - skills
+  - MCP
+  - AI
+---
+
 ### 概念
 
 大模型调用tool有个问题：
