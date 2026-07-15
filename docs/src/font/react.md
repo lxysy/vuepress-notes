@@ -52,7 +52,7 @@ const Test = (){
 
 ### 更新界面
 
-```react
+```jsx
 import { useState } from 'react';
 
 const handleClick = ()=>{
@@ -79,7 +79,7 @@ const Test = (){
 
 将两个按钮的数据同是更新，将各个按钮的 `state`向上移动到父组件
 
-```react
+```jsx
 import { useState } from 'react';
 
 const App = () => {

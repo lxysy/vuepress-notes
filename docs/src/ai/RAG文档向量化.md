@@ -14,7 +14,7 @@ RAG： Retrieval 检索 - Augmented 增强 - Generation
 
 用于解决大模型幻觉问题，用户要查询的内容，我们先去内部知识库里查一下，把它放到 prompt 里再给大模型。 这样大模型通过这些文档知道了背景知识，就可以回答响应的问题了
 
-![rag流程](./img/rag流程.png)
+![rag流程](./img/rag-flow.png)
 
 
 
@@ -56,7 +56,7 @@ RAG： Retrieval 检索 - Augmented 增强 - Generation
 
 知识（文本、语音、音频等）-> 嵌入模型 -> 向量数据库
 
-![rag流程 (1)](./img/rag流程 (1).png)
+![rag-flow1](./img/rag-flow1.png)
 
 流程就变为了：
 
