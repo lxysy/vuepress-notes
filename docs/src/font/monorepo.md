@@ -6,7 +6,6 @@ categories:
 tags:
   - pnpm
   - monorepo
-sticky: 2
 ---
 
 # 使用pnpm快速搭建monorepo项目

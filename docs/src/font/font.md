@@ -5,7 +5,6 @@ categories:
   - 前端
 tags:
   - JavaScript
-sticky: 1
 ---
 
 # 前端基础知识

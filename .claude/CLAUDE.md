@@ -41,3 +41,22 @@ tags:
 **为什么：** 该项目的 VuePress 静态站点生成器依赖 frontmatter 来生成导航、分类归档和标签页，缺少或格式错误会导致文档无法正确展示。
 
 **如何执行：** 每次在本项目中创建新的 .md 文件时，自动套用上述 frontmatter 模板，根据文档内容填充 title、date、categories 和 tags。编辑已有文档时补充缺失的 frontmatter。
+
+## `sticky` 字段规则（vuepress-theme-reco）
+
+`sticky` 用于文章置顶，排序规则为**升序排列**（**值越小越靠前**）：
+
+```yaml
+---
+title: 示例
+sticky: 1   # 比 sticky: 2 排得更靠前
+---
+```
+
+- `sticky: 1` → 优先展示
+- `sticky: 2` → 排在 `sticky: 1` 之后
+- 不设置 `sticky` → 不置顶，按日期倒序排列
+
+> ⚠️ 该行为与直觉上的"权重越大越靠前"相反，已在部署环境验证确认。
+
+**如何执行：** 多个置顶文章按需求设置递增的 `sticky` 值，值最小的排最前。
