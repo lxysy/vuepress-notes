@@ -2,7 +2,7 @@
 home: true
 heroText: FYShawn
 tagline: Blog
-heroImage: "/avator1.png"
+heroImage: "/zzy.jpg"
 heroImageStyle:
   {
     display: block,
