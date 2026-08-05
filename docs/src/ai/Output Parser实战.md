@@ -496,9 +496,9 @@ withStructuredOutput 底层是 tool、output parser，其实还有一种特性 J
 >
 > 补充一个背景：`json_schema` 结构化输出是 OpenAI 后来推出的能力，DeepSeek 这类走「OpenAI 兼容协议」的厂商实现得慢，很多框架（LangChain 的 `withStructuredOutput` 默认就发 `json_schema`）踩的都是同一个坑。
 
-json schema 就和 tool 的 args 一样，都是大模型层面支持的，会保证按照这个格式来返回，如果格式不对，会在模型层面重新生成正确的返回。  也就是说，withStructuredOutput 底层是 tool、json schema、output parser 这三者
 
 
+这里我环境变量改为GPT模型
 
 看下模型支持`json_schema` 参数时的用法：
 
@@ -523,11 +523,12 @@ const scientistSchema = z
 const nativeJsonSchema = zodToJsonSchema(scientistSchema);
 
 const model = new ChatOpenAI({
-  modelName: process.env.MODEL_NAME,
+  modelName: process.env.GPT_MODEL_NAME,
   temperature: 0,
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.GPT_OPENAI_API_KEY,
+  streaming: true, // sssaiapi 代理要求 stream=true
   configuration: {
-    baseURL: process.env.OPENAI_BASE_URL,
+    baseURL: process.env.GPT_OPENAI_BASE_URL,
   },
   modelKwargs: {
     // 通过 modelKwargs 传入原生参数
@@ -560,6 +561,386 @@ async function testNativeJsonSchema() {
 
 testNativeJsonSchema().catch(console.error);
 ```
+
+![image-20260805213401854](./img/image-20260805213401854.png)
+
+ json schema 就和 tool 的 args 一样，都是大模型层面支持的，会保证按照这个格式来返回，如果格式不对，会在模型层面重新生成正确的返回  
+
+也就是说，withStructuredOutput 底层是 tool、json schema、output parser 这三者
+
+### 流式输出实战
+
+之前写tool时的流程：
+
+![image-20260805213908811](./img/image-20260805213908811.png)
+
+- 传入 SystemMessage 和 HumanMessage，调用大模型之后，返回 AIMessage
+- AIMessage 也加入 memory
+- 根据 AIMessage 中的 tool_calls 信息调用 tool，执行结果封装成 ToolMessage 放入 memory
+- 直到不再返回带 tool_calls 信息的 AIMessage，就代表循环结束
+
+
+
+#### 难点
+
+要实现流式返回，这里有一个难点
+
+返回的 AIMessage 是 chunk
+
+![image-20260805214510564](./img/image-20260805214510564.png)
+
+![image-20260805214654942](./img/image-20260805214654942.png)
+
+`chunk` 是 `@langchain/core` 的 **`AIMessageChunk`** 对象（消息块），不是普通的 `console.log` 能看到的全貌。在绑定了工具的流式场景下，每个 chunk 是一小片"增量"，多个 chunk 拼接起来才是完整的一次工具调用
+
+一个 `AIMessageChunk` 大致长这样：
+
+```json
+AIMessageChunk {
+  id, content, type: "ai",
+  tool_call_chunks: [ { index, id, name, args } ],   // ← 流式工具调用的核心
+  tool_calls: undefined,            // 流式过程中通常为空
+  invalid_tool_calls: [],
+  usage_metadata: { input_tokens, output_tokens, total_tokens },
+  response_metadata, additional_kwargs, ...
+}
+```
+
+具体每个字段：
+
+| 字段                 | 含义                           | 流式中值                                                     |
+| -------------------- | ------------------------------ | ------------------------------------------------------------ |
+| `type`               | 固定为 `"ai"`                  | `"ai"`                                                       |
+| `content`            | 文本内容                       | 工具调用流中多为 `""`（或说明性文本）                        |
+| `tool_call_chunks`   | **工具调用的碎片数组**，是核心 | 数组，每个元素是一次并行工具调用的某一片段                   |
+| `tool_calls`         | 完整解析后的工具调用           | 流式中间过程**通常为 `undefined`**，只有消息聚合完成后才有值 |
+| `invalid_tool_calls` | 参数无法解析成 JSON 的调用     | 一般 `[]`                                                    |
+| `usage_metadata`     | token 用量                     | 部分 chunk 有，含 `input_tokens` / `output_tokens` / `total_tokens` |
+
+综上所述，我们需要把AIMessageChunk 拼接成完整的 AIMessage 才能放入 Memory 再次调用大模型
+
+对比之前使用JsonOutputToolsParser 
+
+```js
+import "dotenv/config";
+import { ChatOpenAI } from "@langchain/openai";
+import { JsonOutputToolsParser } from "@langchain/core/output_parsers/openai_tools";
+import { z } from "zod";
+
+const model = new ChatOpenAI({
+  modelName: process.env.MODEL_NAME,
+  apiKey: process.env.OPENAI_API_KEY,
+  temperature: 0,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+});
+
+// 定义结构化输出的 schema
+const scientistSchema = z.object({
+  name: z.string().describe("科学家的全名"),
+  birth_year: z.number().describe("出生年份"),
+  death_year: z.number().optional().describe("去世年份，如果还在世则不填"),
+  nationality: z.string().describe("国籍"),
+  fields: z.array(z.string()).describe("研究领域列表"),
+  achievements: z.array(z.string()).describe("主要成就"),
+  biography: z.string().describe("简短传记"),
+});
+
+// 绑定工具到模型
+const modelWithTool = model.bindTools([
+  {
+    name: "extract_scientist_info",
+    description: "提取和结构化科学家的详细信息",
+    schema: scientistSchema,
+  },
+]);
+
+// 1. 绑定工具并挂载解析器
+const parser = new JsonOutputToolsParser();
+const chain = modelWithTool.pipe(parser);
+
+try {
+  // 2. 开启流
+  const stream = await chain.stream("详细介绍牛顿的生平和成就");
+
+  let lastContent = ""; // 记录已打印的完整内容
+  let finalResult = null; // 存储最终的完整结果
+
+  console.log("📡 实时输出流式内容:\n");
+
+  for await (const chunk of stream) {
+    console.log(chunk);
+
+    // if (chunk.length > 0) {
+    //   const toolCall = chunk[0];
+
+    //   // 获取当前工具调用的完整参数内容 toolCall.args 是目前为止累积解析出的部分对象
+    //   const currentContent = JSON.stringify(toolCall.args || {}, null, 2);
+
+    //   if (currentContent.length > lastContent.length) {
+    //     const newText = currentContent.slice(lastContent.length);
+    //     process.stdout.write(newText); // 实时输出到控制台
+    //     lastContent = currentContent; // 更新已读进度
+    //   }
+
+    //   // console.log(toolCall.args);
+    // }
+  }
+
+  console.log("\n\n✅ 流式输出完成");
+} catch (error) {
+  console.error("\n❌ 错误:", error.message);
+  console.error(error);
+}
+```
+
+![image-20260805215952843](./img/image-20260805215952843.png)
+
+可以看到这里的args里面是完整的json
+
+**也就是说流式的两个难点**：
+
+- 返回的是 AIMessageChunk，需要 concat 拼接成完整的 AIMessage
+- AIMessageChunk 里的是 tool_call_chunks，只包含部分参数，需要用 JsonOutputToolsParser 来解析成 json
+
+![image-20260805220244331](./img/image-20260805220244331.png)
+
+#### 实现Mini cusor
+
+```js
+import "dotenv/config";
+import { ChatOpenAI } from "@langchain/openai";
+import {
+  HumanMessage,
+  SystemMessage,
+  ToolMessage,
+} from "@langchain/core/messages";
+import { InMemoryChatMessageHistory } from "@langchain/core/chat_history";
+import { JsonOutputToolsParser } from "@langchain/core/output_parsers/openai_tools";
+import {
+  executeCommandTool,
+  listDirectoryTool,
+  readFileTool,
+  writeFileTool,
+} from "./all-tools.mjs";
+import chalk from "chalk";
+
+const model = new ChatOpenAI({
+  modelName: process.env.MODEL_NAME,
+  apiKey: process.env.OPENAI_API_KEY,
+  temperature: 0,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+});
+
+const tools = [
+  readFileTool,
+  writeFileTool,
+  executeCommandTool,
+  listDirectoryTool,
+];
+
+// 绑定工具到模型
+const modelWithTools = model.bindTools(tools);
+
+// Agent 执行函数
+async function runAgentWithTools(query, maxIterations = 30) {
+  const history = new InMemoryChatMessageHistory();
+
+  await history.addMessage(
+    new SystemMessage(`你是一个项目管理助手，使用工具完成任务。
+
+当前工作目录: ${process.cwd()}
+
+工具：
+1. read_file: 读取文件
+2. write_file: 写入文件
+3. execute_command: 执行命令（支持 workingDirectory 参数）
+4. list_directory: 列出目录
+
+重要规则 - execute_command：
+- workingDirectory 参数会自动切换到指定目录
+- 当使用 workingDirectory 时，绝对不要在 command 中使用 cd
+- 错误示例: { command: "cd react-todo-app && pnpm install", workingDirectory: "react-todo-app" }
+- 正确示例: { command: "pnpm install", workingDirectory: "react-todo-app" }
+
+重要规则 - write_file：
+- 当写入 React 组件文件（如 App.tsx）时，如果存在对应的 CSS 文件（如 App.css），在其他 import 语句后加上这个 css 的导入
+`),
+  );
+
+  await history.addMessage(new HumanMessage(query));
+
+  for (let i = 0; i < maxIterations; i++) {
+    console.log(chalk.bgGreen(`⏳ 正在等待 AI 思考...`));
+
+    // 获取当前消息历史
+    const messages = await history.getMessages();
+
+    const rawStream = await modelWithTools.stream(messages);
+
+    // 准备一个空的容器来拼接完整的 AIMessage
+    let fullAIMessage = null;
+
+    // 准备一个 tool_call_chunks 的 JSON 增量解析器
+    const toolParser = new JsonOutputToolsParser();
+
+    // 记录每个工具调用已打印的长度（用 id 或 filePath 作为 key）
+    const printedLengths = new Map();
+
+    console.log(chalk.bgBlue(`\n🚀 Agent 开始思考并生成流...\n`));
+
+    for await (const chunk of rawStream) {
+      // 这里的 chunk 是 AIMessageChunk，把它拼接起来
+      fullAIMessage = fullAIMessage ? fullAIMessage.concat(chunk) : chunk;
+
+      let parsedTools = null;
+      // 工具调用的参数是流式拼接的 JSON，前半段可能不完整，所以解析失败就 catch 掉继续等
+      try {
+        parsedTools = await toolParser.parseResult([
+          { message: fullAIMessage },
+        ]);
+      } catch (e) {
+        // 解析失败说明 JSON 还不完整，忽略错误继续累积
+      }
+
+      if (parsedTools && parsedTools.length > 0) {
+        for (const toolCall of parsedTools) {
+          if (toolCall.type === "write_file" && toolCall.args?.content) {
+            const toolCallId =
+              toolCall.id || toolCall.args.filePath || "default";
+              // content 这个字符串会随着 chunk 到来逐渐变长（比如先来 "import"，再来 " import React"...）
+            const currentContent = String(toolCall.args.content);
+            const previousLength = printedLengths.get(toolCallId);
+
+            if (previousLength === undefined) {
+              printedLengths.set(toolCallId, 0);
+              console.log(
+                chalk.bgBlue(
+                  `\n[工具调用] write_file("${toolCall.args.filePath}") - 开始写入（流式预览）\n`,
+                ),
+              );
+            }
+
+            if (currentContent.length > previousLength) {
+              const newContent = currentContent.slice(previousLength);
+              process.stdout.write(newContent);
+              printedLengths.set(toolCallId, currentContent.length);
+            }
+          }
+        }
+      } else {
+        // 当前还没有解析出工具调用时，如果有文本内容就直接输出
+        if (chunk.content) {
+          process.stdout.write(
+            typeof chunk.content === "string"
+              ? chunk.content
+              : JSON.stringify(chunk.content),
+          );
+        }
+      }
+    }
+
+    // 此时 fullAIMessage 已经完美还原，直接存入 history
+    await history.addMessage(fullAIMessage);
+    console.log(chalk.green("\n✅ 消息已完整存入历史"));
+
+    // 检查是否有工具调用
+    if (!fullAIMessage.tool_calls || fullAIMessage.tool_calls.length === 0) {
+      console.log(`\n✨ AI 最终回复:\n${fullAIMessage.content}\n`);
+      return fullAIMessage.content;
+    }
+
+    // 执行工具调用
+    for (const toolCall of fullAIMessage.tool_calls) {
+      const foundTool = tools.find((t) => t.name === toolCall.name);
+      if (foundTool) {
+        const toolResult = await foundTool.invoke(toolCall.args);
+        await history.addMessage(
+          new ToolMessage({
+            content: toolResult,
+            tool_call_id: toolCall.id,
+          }),
+        );
+      }
+    }
+  }
+
+  const finalMessages = await history.getMessages();
+  return finalMessages[finalMessages.length - 1].content;
+}
+
+const case1 = `创建一个功能丰富的 React TodoList 应用：
+
+1. 创建项目：echo -e "n\nn" | pnpm create vite react-todo-app --template react-ts
+2. 修改 src/App.tsx，实现完整功能的 TodoList：
+ - 添加、删除、编辑、标记完成
+ - 分类筛选（全部/进行中/已完成）
+ - 统计信息显示
+ - localStorage 数据持久化
+3. 添加复杂样式：
+ - 渐变背景（蓝到紫）
+ - 卡片阴影、圆角
+ - 悬停效果
+4. 添加动画：
+ - 添加/删除时的过渡动画
+ - 使用 CSS transitions
+5. 列出目录确认
+
+注意：使用 pnpm，功能要完整，样式要美观，要有动画效果
+
+去掉 main.tsx 里的 index.css 导入
+
+之后在 react-todo-app 项目中：
+1. 使用 pnpm install 安装依赖
+2. 使用 pnpm run dev 启动服务器
+`;
+
+try {
+  await runAgentWithTools(case1);
+} catch (error) {
+  console.error(`\n❌ 错误: ${error.message}\n`);
+}
+```
+
+解释下循环流程：
+
+**1. 取历史、发起流式请求**（[mini-cursor.mjs:69-71](vscode-webview://00tirqpivijkeevccub8cm2nirsjp6cdf8qlm02k6qktt68nep7h/output-parser-test/src/test/mini-cursor.mjs#L69-L71)） 把当前完整消息历史发给绑定好工具的模型，拿到流式输出 `rawStream`。
+
+**2. 逐 chunk 拼接 + 实时流式预览**（[mini-cursor.mjs:84-131](vscode-webview://00tirqpivijkeevccub8cm2nirsjp6cdf8qlm02k6qktt68nep7h/output-parser-test/src/test/mini-cursor.mjs#L84-L131)）
+
+- `fullAIMessage = fullAIMessage.concat(chunk)` 把每个 chunk 拼成完整消息。
+- 用 `JsonOutputToolsParser` 对**增量**的完整消息做 JSON 解析（工具调用的参数是流式拼接的 JSON，前半段可能不完整，所以解析失败就 `catch` 掉继续等）。
+- **预览逻辑**：如果当前 chunk 解析出了 `write_file` 工具调用，就用 `printedLengths` 这个 Map 记录每个工具调用已打印的字符数，只把**新增的部分** `slice` 出来实时打印——这样能在完整 JSON 出来前就看到"文件正在被写什么内容"。
+- 如果还没解析出工具调用（`parsedTools` 为空），就直接输出 `chunk.content` 的文本——也就是把 AI 的思考/中间话术实时显示出来。
+
+**3. 存入历史**（[mini-cursor.mjs:133-135](vscode-webview://00tirqpivijkeevccub8cm2nirsjp6cdf8qlm02k6qktt68nep7h/output-parser-test/src/test/mini-cursor.mjs#L133-L135)） 此时 `fullAIMessage` 已完整还原（含完整的 `tool_calls`），存入 `history`。
+
+**4. 判断是否结束**（[mini-cursor.mjs:138-141](vscode-webview://00tirqpivijkeevccub8cm2nirsjp6cdf8qlm02k6qktt68nep7h/output-parser-test/src/test/mini-cursor.mjs#L138-L141)） 如果这条 AI 消息里**没有工具调用**，说明 AI 已经给出最终答案，直接返回 `content` 结束整个循环。
+
+**5. 执行工具并回填结果**（[mini-cursor.mjs:144-155](vscode-webview://00tirqpivijkeevccub8cm2nirsjp6cdf8qlm02k6qktt68nep7h/output-parser-test/src/test/mini-cursor.mjs#L144-L155)） 如果有工具调用，逐个找到对应工具（`read_file`/`write_file`/`execute_command`/`list_directory`）执行，把结果包成 `ToolMessage`（带 `tool_call_id`）加进历史，然后进入下一轮迭代让 AI 看到工具结果继续思考。
+
+![image-20260805225412109](./img/image-20260805225412109.png)
+
+注意：
+
+1.使用AIMessage.concat拼接 AIMessageChunk 成完整 AIMessage
+
+![image-20260805225503040](./img/image-20260805225503040.png)
+
+2. JsonOutputToolsParser 来解析 tool_call_chunks
+
+### 总结
+
+智能录入：这个是常见需求，调用大模型对一段文本做解析，返回结构化的数据，一般用 model.withStructuredOutput，之后存入数据库即可
+
+流式版 mini cursor：这个主要是要流式打印 tool 的参数，需要做好 AIMessageChunk 的 concat，以及用 JsonOutputToolsParser 做 tool_call_chunks 的解析，之后增量打印
+
+此外，我们还补充学习了 withStructuredOutput 底层的另一个 JSON Schema 机制（gpt），当然，平时做结构化直接用  withStructuredOutput 就行，底层会自动根据模型来选择 tool、json schema 或者 output parser
+
+常见的输出控制需求就这两种：结构化输出、流式输出 + tool 参数解析
 
 ### 补充
 
