@@ -15,7 +15,7 @@ tags:
 
 大模型返回了 AIMessage 和 tool_calls 信息
 
-![Memory管理-01.png](./img/Memory管理-01.png)
+![memory-management-01.png](./img/memory-management-01.png)
 
 我们基于 tool_calls 去调用工具，然后把结果封装成 ToolMessage 也放入 messages 数组
 
@@ -23,7 +23,7 @@ tags:
 
 循环调用大模型，这是第二步
 
-![Memory管理-02.png](./img/Memory管理-02.png)
+![memory-management-02.png](./img/memory-management-02.png)
 
 直到最后没有tool_callls，就返回AIMessage,得到最终回复
 
@@ -41,7 +41,7 @@ tags:
 
 langchain中有ChatMessageHistory相关的类
 
-![Memory管理-03.png](./img/Memory管理-03.png)
+![memory-management-03.png](./img/memory-management-03.png)
 
 截断、总结、检索（向量数据库）完全可以自己实现：
 
@@ -117,7 +117,7 @@ inMemoryDemo().catch(console.error);
 
 运行：
 
-![Memory管理-04.png](./img/Memory管理-04.png)
+![memory-management-04.png](./img/memory-management-04.png)
 
 可以看到大模型记住了之前谈话的内容，之前是使用`messages`数组实现的，现在使用`InMemoryChatMessageHistory`
 
@@ -192,7 +192,7 @@ fileHistoryDemo().catch(console.error);
 
 运行：
 
-![Memory管理-05.png](./img/Memory管理-05.png)
+![memory-management-05.png](./img/memory-management-05.png)
 
 本地文件啊也正常写入了
 
@@ -259,7 +259,7 @@ fileHistoryDemo().catch(console.error);
 
 运行：
 
-![Memory管理-06.png](./img/Memory管理-06.png)
+![memory-management-06.png](./img/memory-management-06.png)
 
 实际上这样就实现了本地文件记录历史记录  
 
@@ -399,7 +399,7 @@ runAll().catch(console.error);
 
 运行：
 
-![Memory管理-07.png](./img/Memory管理-07.png)
+![memory-management-07.png](./img/memory-management-07.png)
 
 这里是两种计数逻辑
 

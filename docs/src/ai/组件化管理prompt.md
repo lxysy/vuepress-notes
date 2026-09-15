@@ -93,7 +93,7 @@ for await (const chunk of stream) {
 
 使用的时候使用format方法传入数据，然后就能生成好给大模型的prompt
 
-![组件化管理prompt-01](./img/组件化管理prompt-01.png)
+![组件化管理prompt-01](./img/component-prompt-01.png)
 
 有了这个prompt模板
 
@@ -227,9 +227,9 @@ const pipelineFormatted = await pipelinePrompt.format({
 
 指定了一个 finalPrompt 最终的 prompt，以及它组合的所有 pipelinePrompts
 
-![组件化管理prompt-02](./img/组件化管理prompt-02.png)
+![组件化管理prompt-02](./img/component-prompt-02.png)
 
-![组件化管理prompt-03](./img/组件化管理prompt-03.png)
+![组件化管理prompt-03](./img/component-prompt-03.png)
 
 这就相当于将prompt分块管理
 
@@ -358,7 +358,7 @@ console.log(partialFormatted2);
 
 ![09073](./img/09073.png)
 
-![组件化管理prompt-04](./img/组件化管理prompt-04.png)
+![组件化管理prompt-04](./img/component-prompt-04.png)
 
 ### ChatPromptTemplate
 
@@ -554,7 +554,7 @@ const chatMessages = await chatPrompt.formatMessages({
 
 然后用 formatPromptValue 这个方法拿到填入变量后的 messages 数组：
 
-![组件化管理prompt-05](./img/组件化管理prompt-05.png)
+![组件化管理prompt-05](./img/component-prompt-05.png)
 
 #### 第二种写法：
 
@@ -636,7 +636,7 @@ console.log(chatMessages);
 // console.log(response.content);
 ```
 
-![组件化管理prompt-06](./img/组件化管理prompt-06.png)
+![组件化管理prompt-06](./img/component-prompt-06.png)
 
 不是传入二维数组了，而是分别用 SystemMessagePromptTemplate、HumanMessagePromptTemplate 等创建具体的 PromptTemplate
 
@@ -723,7 +723,7 @@ console.log(formattedMessages.toChatMessages());
 
 ```
 
-![组件化管理prompt-07](./img/组件化管理prompt-07.png)
+![组件化管理prompt-07](./img/component-prompt-07.png)
 
 这里用 MessagesPlaceholder 来插入一段对话历史
 
@@ -794,7 +794,7 @@ const fewShotBlock = await fewShotPrompt.format({});
 console.log(fewShotBlock);
 ```
 
-![组件化管理prompt-08](./img/组件化管理prompt-08.png)
+![组件化管理prompt-08](./img/component-prompt-08.png)
 
 先用 PromptTemplate 创建了示例的 prompt 模版
 
