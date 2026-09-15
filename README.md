@@ -3,6 +3,9 @@
 
 ## 参考资料：
 
+### 预览地址
+[lxysy.github.io/vuepress-notes/](https://lxysy.github.io/vuepress-notes/)
+
 ### 框架：
 https://vuepress.vuejs.org/zh/
 
