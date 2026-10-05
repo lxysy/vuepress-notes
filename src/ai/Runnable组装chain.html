@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Runnable组装chain | 笔记</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="笔记">
+    
+    <link rel="preload" href="/vuepress-notes/assets/css/0.styles.441a784a.css" as="style"><link rel="preload" href="/vuepress-notes/assets/js/app.052bc2ac.js" as="script"><link rel="preload" href="/vuepress-notes/assets/js/3.fb77ef7a.js" as="script"><link rel="preload" href="/vuepress-notes/assets/js/1.7b8619ea.js" as="script"><link rel="preload" href="/vuepress-notes/assets/js/12.d4f2389d.js" as="script"><link rel="prefetch" href="/vuepress-notes/assets/js/10.0d3673fb.js"><link rel="prefetch" href="/vuepress-notes/assets/js/11.cc36bde0.js"><link rel="prefetch" href="/vuepress-notes/assets/js/13.8067be11.js"><link rel="prefetch" href="/vuepress-notes/assets/js/14.2e535b90.js"><link rel="prefetch" href="/vuepress-notes/assets/js/15.c3004a0b.js"><link rel="prefetch" href="/vuepress-notes/assets/js/16.a06321d2.js"><link rel="prefetch" href="/vuepress-notes/assets/js/17.97679d7a.js"><link rel="prefetch" href="/vuepress-notes/assets/js/18.e8445817.js"><link rel="prefetch" href="/vuepress-notes/assets/js/19.4629daa4.js"><link rel="prefetch" href="/vuepress-notes/assets/js/20.2e21554e.js"><link rel="prefetch" href="/vuepress-notes/assets/js/21.c221708b.js"><link rel="prefetch" href="/vuepress-notes/assets/js/22.c79a09f9.js"><link rel="prefetch" href="/vuepress-notes/assets/js/23.eb366479.js"><link rel="prefetch" href="/vuepress-notes/assets/js/24.d295416c.js"><link rel="prefetch" href="/vuepress-notes/assets/js/25.cff35c5f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/26.25cc00ce.js"><link rel="prefetch" href="/vuepress-notes/assets/js/27.c9f84c7e.js"><link rel="prefetch" href="/vuepress-notes/assets/js/28.34b4cea3.js"><link rel="prefetch" href="/vuepress-notes/assets/js/29.fe4d9261.js"><link rel="prefetch" href="/vuepress-notes/assets/js/30.4e85d4ed.js"><link rel="prefetch" href="/vuepress-notes/assets/js/31.61703c96.js"><link rel="prefetch" href="/vuepress-notes/assets/js/32.428d55a7.js"><link rel="prefetch" href="/vuepress-notes/assets/js/33.ebed4eef.js"><link rel="prefetch" href="/vuepress-notes/assets/js/34.ec647187.js"><link rel="prefetch" href="/vuepress-notes/assets/js/35.bc6c434b.js"><link rel="prefetch" href="/vuepress-notes/assets/js/36.19b0f416.js"><link rel="prefetch" href="/vuepress-notes/assets/js/37.7fef11ed.js"><link rel="prefetch" href="/vuepress-notes/assets/js/38.f0b70575.js"><link rel="prefetch" href="/vuepress-notes/assets/js/39.6b0a991f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/4.f1e69498.js"><link rel="prefetch" href="/vuepress-notes/assets/js/40.38ff534f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/41.aaa91316.js"><link rel="prefetch" href="/vuepress-notes/assets/js/42.0b30f568.js"><link rel="prefetch" href="/vuepress-notes/assets/js/43.6d0d99d9.js"><link rel="prefetch" href="/vuepress-notes/assets/js/44.7b0f88db.js"><link rel="prefetch" href="/vuepress-notes/assets/js/45.07bcc49f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/46.8c012a40.js"><link rel="prefetch" href="/vuepress-notes/assets/js/47.44332529.js"><link rel="prefetch" href="/vuepress-notes/assets/js/48.5805ae36.js"><link rel="prefetch" href="/vuepress-notes/assets/js/49.6661665c.js"><link rel="prefetch" href="/vuepress-notes/assets/js/5.6a18a64f.js"><link rel="prefetch" href="/vuepress-notes/assets/js/6.faf1c326.js"><link rel="prefetch" href="/vuepress-notes/assets/js/7.ea6a7bb9.js"><link rel="prefetch" href="/vuepress-notes/assets/js/8.67d28a2e.js"><link rel="prefetch" href="/vuepress-notes/assets/js/9.743c7173.js">
+    <link rel="stylesheet" href="/vuepress-notes/assets/css/0.styles.441a784a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>笔记</h3> <p class="description" data-v-59e6cb88>笔记</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>FYShawn</span>
+          
+        <!---->
+        2026
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-notes/" class="home-link router-link-active"><img src="/vuepress-notes/toji.jpg" alt="笔记" class="logo"> <span class="site-name">笔记</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vuepress-notes/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/WSL/" class="nav-link"><i class="undefined"></i>
+  WSL
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AI/" class="nav-link"><i class="undefined"></i>
+  AI
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/Claude Code/" class="nav-link"><i class="undefined"></i>
+  Claude Code
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/langchain/" class="nav-link"><i class="undefined"></i>
+  langchain
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/mcp/" class="nav-link"><i class="undefined"></i>
+  mcp
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue/" class="nav-link"><i class="undefined"></i>
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/构建工具/" class="nav-link"><i class="undefined"></i>
+  构建工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/框架/" class="nav-link"><i class="undefined"></i>
+  框架
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/rxjs/" class="nav-link"><i class="undefined"></i>
+  rxjs
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/ant-design-pro/" class="nav-link"><i class="undefined"></i>
+  ant-design-pro
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/angular/" class="nav-link"><i class="undefined"></i>
+  angular
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/electron/" class="nav-link"><i class="undefined"></i>
+  electron
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/mdbook/" class="nav-link"><i class="undefined"></i>
+  mdbook
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/离线文档/" class="nav-link"><i class="undefined"></i>
+  离线文档
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/可视化/" class="nav-link"><i class="undefined"></i>
+  可视化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AntV G6/" class="nav-link"><i class="undefined"></i>
+  AntV G6
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue原理/" class="nav-link"><i class="undefined"></i>
+  vue原理
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/垃圾回收/" class="nav-link"><i class="undefined"></i>
+  垃圾回收
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/GC/" class="nav-link"><i class="undefined"></i>
+  GC
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/下载依赖上传私有npm源/" class="nav-link"><i class="undefined"></i>
+  下载依赖上传私有npm源
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/面试/" class="nav-link"><i class="undefined"></i>
+  面试
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/D3.js/" class="nav-link"><i class="undefined"></i>
+  D3.js
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      FYShawn 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/1838800372241005" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/lxysy" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-notes/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/vuepress-notes/toji.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    FYShawn
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>39</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>47</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/vuepress-notes/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/工具/" class="nav-link"><i class="undefined"></i>
+  工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/WSL/" class="nav-link"><i class="undefined"></i>
+  WSL
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AI/" class="nav-link"><i class="undefined"></i>
+  AI
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/Claude Code/" class="nav-link"><i class="undefined"></i>
+  Claude Code
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/langchain/" class="nav-link"><i class="undefined"></i>
+  langchain
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/mcp/" class="nav-link"><i class="undefined"></i>
+  mcp
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue/" class="nav-link"><i class="undefined"></i>
+  vue
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/工程化/" class="nav-link"><i class="undefined"></i>
+  工程化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/构建工具/" class="nav-link"><i class="undefined"></i>
+  构建工具
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/框架/" class="nav-link"><i class="undefined"></i>
+  框架
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/React/" class="nav-link"><i class="undefined"></i>
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/rxjs/" class="nav-link"><i class="undefined"></i>
+  rxjs
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/ant-design-pro/" class="nav-link"><i class="undefined"></i>
+  ant-design-pro
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/angular/" class="nav-link"><i class="undefined"></i>
+  angular
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/electron/" class="nav-link"><i class="undefined"></i>
+  electron
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/mdbook/" class="nav-link"><i class="undefined"></i>
+  mdbook
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/离线文档/" class="nav-link"><i class="undefined"></i>
+  离线文档
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/可视化/" class="nav-link"><i class="undefined"></i>
+  可视化
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/AntV G6/" class="nav-link"><i class="undefined"></i>
+  AntV G6
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/vue原理/" class="nav-link"><i class="undefined"></i>
+  vue原理
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/垃圾回收/" class="nav-link"><i class="undefined"></i>
+  垃圾回收
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/GC/" class="nav-link"><i class="undefined"></i>
+  GC
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/下载依赖上传私有npm源/" class="nav-link"><i class="undefined"></i>
+  下载依赖上传私有npm源
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/面试/" class="nav-link"><i class="undefined"></i>
+  面试
+</a></li><li class="dropdown-item"><!----> <a href="/vuepress-notes/categories/D3.js/" class="nav-link"><i class="undefined"></i>
+  D3.js
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      FYShawn 的博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://juejin.cn/user/1838800372241005" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/lxysy" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="undefined"></i>
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div><div class="nav-item"><a href="/vuepress-notes/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>Runnable组装chain</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>FYShawn</span>
+          
+        <!---->
+        2026
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">Runnable组装chain</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>FYShawn</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2026/8/6</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>AI Runnable</span></i></div></div> <div class="theme-reco-content content__default"><p>LangChain 很多 api 都实现了 Runnable 接口，比如 PromptTemplate、OutputParser、ChatOpenAI 等</p> <p>安装依赖</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">pnpm</span> <span class="token function">install</span> dotenv @langchain/core @langchain/openai zod
+</code></pre></div><p>准备好.env文件</p> <p>runnable-test\src\before.mjs</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">&quot;dotenv/config&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> StructuredOutputParser <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/output_parsers&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> PromptTemplate <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/prompts&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ChatOpenAI <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/openai&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> z <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;zod&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ChatOpenAI</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">modelName</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">MODEL_NAME</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">apiKey</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_API_KEY</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">temperature</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">configuration</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">baseURL</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_BASE_URL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 定义输出结构 schema</span>
+<span class="token keyword">const</span> schema <span class="token operator">=</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">translation</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;翻译后的英文文本&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">keywords</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">array</span><span class="token punctuation">(</span>z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;3个关键词&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> outputParser <span class="token operator">=</span> StructuredOutputParser<span class="token punctuation">.</span><span class="token function">fromZodSchema</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> promptTemplate <span class="token operator">=</span> PromptTemplate<span class="token punctuation">.</span><span class="token function">fromTemplate</span><span class="token punctuation">(</span>
+  <span class="token string">&quot;将以下文本翻译成英文，然后总结为3个关键词。\n\n文本：{text}\n\n{format_instructions}&quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token string">&quot;LangChain 是一个强大的 AI 应用开发框架&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">format_instructions</span><span class="token operator">:</span> outputParser<span class="token punctuation">.</span><span class="token function">getFormatInstructions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 步骤 1: 格式化 prompt</span>
+<span class="token keyword">const</span> formattedPrompt <span class="token operator">=</span> <span class="token keyword">await</span> promptTemplate<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 步骤 2: 调用模型</span>
+<span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> model<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>formattedPrompt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 步骤 3: 解析输出</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> outputParser<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;✅ 最终结果:&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20260922213905868.524d0129.png" alt="image-20260922213905868"></p> <p>可以看到我们之前去写一个loop：</p> <ul><li>用 PromptTemplate 管理 prompt，调用 format 传入占位符的值。</li> <li>调用 ChatOpenAI 的大模型，通过 invoke 方法</li> <li>用 StructuredOutputParser 做结构化解析，调用 invoke</li></ul> <h3 id="runnablesequence"><a href="#runnablesequence" class="header-anchor">#</a> RunnableSequence</h3> <p>现在有了Runnable：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> StructuredOutputParser <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/output_parsers&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> PromptTemplate <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/prompts&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ChatOpenAI <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/openai&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnableSequence <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> z <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;zod&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ChatOpenAI</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">modelName</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">MODEL_NAME</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">apiKey</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_API_KEY</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">temperature</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">configuration</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">baseURL</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_BASE_URL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 定义输出结构 schema</span>
+<span class="token keyword">const</span> schema <span class="token operator">=</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">translation</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;翻译后的英文文本&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">keywords</span><span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">array</span><span class="token punctuation">(</span>z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;3个关键词&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> outputParser <span class="token operator">=</span> StructuredOutputParser<span class="token punctuation">.</span><span class="token function">fromZodSchema</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> promptTemplate <span class="token operator">=</span> PromptTemplate<span class="token punctuation">.</span><span class="token function">fromTemplate</span><span class="token punctuation">(</span>
+    <span class="token string">'将以下文本翻译成英文，然后总结为3个关键词。\n\n文本：{text}\n\n{format_instructions}'</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// const chain = promptTemplate</span>
+<span class="token comment">//     .pipe(model)</span>
+<span class="token comment">//     .pipe(outputParser);</span>
+
+<span class="token keyword">const</span> chain <span class="token operator">=</span> RunnableSequence<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    promptTemplate<span class="token punctuation">,</span>
+    model<span class="token punctuation">,</span>
+    outputParser
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token punctuation">{</span> 
+    <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token string">'LangChain 是一个强大的 AI 应用开发框架'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">format_instructions</span><span class="token operator">:</span> outputParser<span class="token punctuation">.</span><span class="token function">getFormatInstructions</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'✅ 最终结果:'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>同样的结果，代码更加清晰简洁</p> <p>用 RunnableSequence 声明这三个顺序执行，最后invoke参数就好了</p> <p>还可以使用pipe
+<img src="/vuepress-notes/assets/img/image-20260922215019287.e0398645.png" alt="image-20260922215019287"></p> <p>实现了 Runnable api 后，就可以声明式的组合执行的 chain，然后统一执行。</p> <p>这种声明式的写法叫做 LCEL（Lang Chain Expression Language，LangChain 表达式语言）</p> <p>LCEL 就是实现了 Runnbale 接口的一些 api 组合成 chain，然后统一执行。</p> <p>Runnable 都有 invoke、stream、batch 方法</p> <p>可以去看Runnable的接口定义</p> <p><img src="/vuepress-notes/assets/img/image-20260922215208214.3d2075b5.png" alt="image-20260922215208214"></p> <ul><li>调用 invoke，就会依次调用这个链条上每个组件的 invoke</li> <li>batch 是批量，也就是并发进行多个单独的 invoke</li> <li>调用 stream 就是调用这个链条上每个组件的 stream，不断返回数据</li></ul> <p>串联起来的 Runnable 的 chain 就自然可以支持同步调用、批量调用、流式返回</p> <p><img src="/vuepress-notes/assets/img/image-20261005104740106.7b8b10b3.png" alt="image-20261005104740106"></p> <h3 id="runnablelambda"><a href="#runnablelambda" class="header-anchor">#</a> RunnableLambda</h3> <p>前面用了 RunnableSequence，它是顺序执行，我们再来用一下其余的 Runnable api：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// runnable-test\src\runnables\RunnableLambda.mjs</span>
+<span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnableLambda<span class="token punctuation">,</span> RunnableSequence <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> addOne <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">输入: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> input <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> multiplyTwo <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">输入: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> input <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> chain <span class="token operator">=</span> RunnableSequence<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    addOne<span class="token punctuation">,</span>
+    multiplyTwo<span class="token punctuation">,</span>
+    addOne
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>我们把两个函数通过 RunnableLambda 封装成了 Runnable，对象然后通过 RunnableSequence 来顺序调用</p> <p>就这样在chain里面调用普通函数</p> <h3 id="runnablemap"><a href="#runnablemap" class="header-anchor">#</a> RunnableMap</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// runnable-test\src\runnables\RunnableMap.mjs</span>
+<span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnableMap<span class="token punctuation">,</span> RunnableLambda <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> PromptTemplate <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/prompts&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> addOne <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input<span class="token punctuation">.</span>num <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> multiplyTwo <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input<span class="token punctuation">.</span>num <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> square <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input<span class="token punctuation">.</span>num <span class="token operator">*</span> input<span class="token punctuation">.</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> greetTemplate <span class="token operator">=</span> PromptTemplate<span class="token punctuation">.</span><span class="token function">fromTemplate</span><span class="token punctuation">(</span><span class="token string">&quot;你好，{name}！&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> weatherTemplate <span class="token operator">=</span> PromptTemplate<span class="token punctuation">.</span><span class="token function">fromTemplate</span><span class="token punctuation">(</span><span class="token string">&quot;今天天气{weather}。&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建 RunnableMap，并行执行多个 runnable</span>
+<span class="token keyword">const</span> runnableMap <span class="token operator">=</span> RunnableMap<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token comment">// 数学运算</span>
+    <span class="token literal-property property">add</span><span class="token operator">:</span> addOne<span class="token punctuation">,</span>
+    <span class="token literal-property property">multiply</span><span class="token operator">:</span> multiplyTwo<span class="token punctuation">,</span>
+    <span class="token literal-property property">square</span><span class="token operator">:</span> square<span class="token punctuation">,</span>
+    
+    <span class="token comment">// prompt 格式化</span>
+    <span class="token literal-property property">greeting</span><span class="token operator">:</span> greetTemplate<span class="token punctuation">,</span>
+    <span class="token literal-property property">weather</span><span class="token operator">:</span> weatherTemplate<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试输入</span>
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;神光&quot;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">weather</span><span class="token operator">:</span> <span class="token string">&quot;多云&quot;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">num</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 执行 RunnableMap</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> runnableMap<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20261005112218516.07a145a5.png" alt="image-20261005112218516"></p> <p>这里我们输入的 input 会并行经过 5 个 Runnable 处理，结果放到对象的对应属性上</p> <h3 id="runnablebranch"><a href="#runnablebranch" class="header-anchor">#</a> RunnableBranch</h3> <p>就是if else 逻辑</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnableBranch<span class="token punctuation">,</span> RunnableLambda <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建条件判断函数</span>
+<span class="token keyword">const</span> isPositive <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> isNegative <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> isEven <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建分支处理函数</span>
+<span class="token keyword">const</span> handlePositive <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">正数: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> + 10 = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input <span class="token operator">+</span> <span class="token number">10</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> handleNegative <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">负数: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> - 10 = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input <span class="token operator">-</span> <span class="token number">10</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> handleEven <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">偶数: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> * 2 = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input <span class="token operator">*</span> <span class="token number">2</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> handleDefault <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">默认: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建 RunnableBranch</span>
+<span class="token keyword">const</span> branch <span class="token operator">=</span> RunnableBranch<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token punctuation">[</span>isPositive<span class="token punctuation">,</span> handlePositive<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>isNegative<span class="token punctuation">,</span> handleNegative<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>isEven<span class="token punctuation">,</span> handleEven<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    handleDefault
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试不同的输入</span>
+<span class="token keyword">const</span> testCases <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> testCase <span class="token keyword">of</span> testCases<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> branch<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>testCase<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">输入: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>testCase<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> =&gt; </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>result<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20261005110356813.945d5b2a.png" alt="image-20261005110356813"></p> <h3 id="routerrunnable"><a href="#routerrunnable" class="header-anchor">#</a> RouterRunnable</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RouterRunnable<span class="token punctuation">,</span> RunnableLambda <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建两个简单的 RunnableLambda</span>
+<span class="token keyword">const</span> toUpperCase <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">text</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> text<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> reverseText <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">text</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> text<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&quot;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">&quot;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建 RouterRunnable，根据 key 选择要调用的 runnable</span>
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RouterRunnable</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">runnables</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    toUpperCase<span class="token punctuation">,</span>
+    reverseText<span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试：调用 reverseText</span>
+<span class="token keyword">const</span> result1 <span class="token operator">=</span> <span class="token keyword">await</span> router<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">&quot;reverseText&quot;</span><span class="token punctuation">,</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">&quot;Hello World&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'reverseText 结果:'</span><span class="token punctuation">,</span> result1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试：调用 toUpperCase</span>
+<span class="token keyword">const</span> result2 <span class="token operator">=</span> <span class="token keyword">await</span> router<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">&quot;toUpperCase&quot;</span><span class="token punctuation">,</span> <span class="token literal-property property">input</span><span class="token operator">:</span> <span class="token string">&quot;Hello World&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'toUpperCase 结果:'</span><span class="token punctuation">,</span> result2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20261005110529199.1513571d.png" alt="image-20261005110529199"></p> <p>根据 key 匹配对应的 chain 来执行</p> <h3 id="runnablepassthrough"><a href="#runnablepassthrough" class="header-anchor">#</a> RunnablePassthrough</h3> <p>它是传入的最初的值</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnablePassthrough<span class="token punctuation">,</span> RunnableLambda<span class="token punctuation">,</span> RunnableSequence<span class="token punctuation">,</span> RunnableMap <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// const chain = RunnableSequence.from([</span>
+<span class="token comment">//     RunnableLambda.from((input) =&gt; ({ concept: input })),</span>
+<span class="token comment">//     RunnableMap.from({</span>
+<span class="token comment">//         original: new RunnablePassthrough(),</span>
+<span class="token comment">//         processed: RunnableLambda.from((obj) =&gt; ({</span>
+<span class="token comment">//             concept: input,</span>
+<span class="token comment">//             upper: obj.concept.toUpperCase(),</span>
+<span class="token comment">//             length: obj.concept.length,</span>
+<span class="token comment">//         }))</span>
+<span class="token comment">//     })</span>
+<span class="token comment">// ]);</span>
+<span class="token keyword">const</span> chain <span class="token operator">=</span> RunnableSequence<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">concept</span><span class="token operator">:</span> input <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    RunnablePassthrough<span class="token punctuation">.</span><span class="token function">assign</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token literal-property property">original</span><span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">RunnablePassthrough</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function-variable function">processed</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token literal-property property">concept</span><span class="token operator">:</span> input<span class="token punctuation">,</span>
+            <span class="token literal-property property">upper</span><span class="token operator">:</span> obj<span class="token punctuation">.</span>concept<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">length</span><span class="token operator">:</span> obj<span class="token punctuation">.</span>concept<span class="token punctuation">.</span>length<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token string">&quot;神说要有光&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20261005112314393.7cc5cdb5.png" alt="image-20261005112314393"></p> <p>original 部分就是通过 RunnablePassthrough 拿到了原始值</p> <p>这里使用的是简化后的代码</p> <p>只保留函数、对象即可，LangChain 会把函数转为 RunnableLambda，把对象转为 RunnableMap</p> <p>如果是想保留原始属性，只是扩展一些属性，用 RunnablePassthrough.assign</p> <p>现在之前的属性也保留着，只是合并了新的属性，就像 Object.assign 一样</p> <h3 id="runnableeach"><a href="#runnableeach" class="header-anchor">#</a> RunnableEach</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnableEach<span class="token punctuation">,</span> RunnableLambda<span class="token punctuation">,</span> RunnableSequence <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> toUpperCase <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> input<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> addGreeting <span class="token operator">=</span> RunnableLambda<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">你好，</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">！</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> processItem <span class="token operator">=</span> RunnableSequence<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  toUpperCase<span class="token punctuation">,</span>
+  addGreeting<span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 使用 RunnableEach 对数组中的每个元素应用这个链</span>
+<span class="token keyword">const</span> chain <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RunnableEach</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">bound</span><span class="token operator">:</span> processItem<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&quot;alice&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;bob&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;carol&quot;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'✅ RunnableEach - 数组元素处理:'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'输入:'</span><span class="token punctuation">,</span> input<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'输出:'</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20261005111936149.fdadd23f.png" alt="image-20261005111936149"></p> <p>对输入的数组的每个元素应用这个 chain</p> <h3 id="runnablepick"><a href="#runnablepick" class="header-anchor">#</a> RunnablePick</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnablePick<span class="token punctuation">,</span> RunnableSequence <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> inputData <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;神光&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">city</span><span class="token operator">:</span> <span class="token string">&quot;北京&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">country</span><span class="token operator">:</span> <span class="token string">&quot;中国&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">email</span><span class="token operator">:</span> <span class="token string">&quot;shenguang@example.com&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">phone</span><span class="token operator">:</span> <span class="token string">&quot;+86-13800138000&quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> chain <span class="token operator">=</span> RunnableSequence<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">(</span><span class="token parameter">input</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token operator">...</span>input<span class="token punctuation">,</span>
+    <span class="token literal-property property">fullInfo</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">，</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token punctuation">.</span>age<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">岁，来自</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>input<span class="token punctuation">.</span>city<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">RunnablePick</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&quot;name&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;fullInfo&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>inputData<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><img src="/vuepress-notes/assets/img/image-20261005112430118.91d5240f.png" alt="image-20261005112430118"></p> <h3 id="runnablewithmessagehistory"><a href="#runnablewithmessagehistory" class="header-anchor">#</a> RunnableWithMessageHistory</h3> <p>给 chain 加上 memory 的功能</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> RunnableWithMessageHistory <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/runnables&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> InMemoryChatMessageHistory <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/chat_history&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ChatOpenAI <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/openai&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ChatPromptTemplate<span class="token punctuation">,</span> MessagesPlaceholder <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/prompts&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> StringOutputParser <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@langchain/core/output_parsers&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ChatOpenAI</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">modelName</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">MODEL_NAME</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">apiKey</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_API_KEY</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">temperature</span><span class="token operator">:</span> <span class="token number">0.3</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">configuration</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">baseURL</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">OPENAI_BASE_URL</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> prompt <span class="token operator">=</span> ChatPromptTemplate<span class="token punctuation">.</span><span class="token function">fromMessages</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">[</span>
+    <span class="token string">&quot;system&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;你是一个简洁、有帮助的中文助手，会用 1-2 句话回答用户问题，重点给出明确、有用的信息。&quot;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">MessagesPlaceholder</span><span class="token punctuation">(</span><span class="token string">&quot;history&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">&quot;human&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;{question}&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> simpleChain <span class="token operator">=</span> prompt<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>model<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringOutputParser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> messageHistories <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">getMessageHistory</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">sessionId</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>messageHistories<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>sessionId<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    messageHistories<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>sessionId<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">InMemoryChatMessageHistory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> messageHistories<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>sessionId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 创建带消息历史的链</span>
+<span class="token keyword">const</span> chain <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RunnableWithMessageHistory</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">runnable</span><span class="token operator">:</span> simpleChain<span class="token punctuation">,</span>
+  <span class="token function-variable function">getMessageHistory</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">sessionId</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">getMessageHistory</span><span class="token punctuation">(</span>sessionId<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">inputMessagesKey</span><span class="token operator">:</span> <span class="token string">&quot;question&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">historyMessagesKey</span><span class="token operator">:</span> <span class="token string">&quot;history&quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试：第一次对话</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'--- 第一次对话（提供信息） ---'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result1 <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">question</span><span class="token operator">:</span> <span class="token string">&quot;我的名字是神光，我来自山东，我喜欢编程、写作、金铲铲。&quot;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">configurable</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">sessionId</span><span class="token operator">:</span> <span class="token string">&quot;user-123&quot;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'问题: 我的名字是神光，我来自山东，我喜欢编程、写作、金铲铲。'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'回答:'</span><span class="token punctuation">,</span> result1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试：第二次对话</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'--- 第二次对话（询问之前的信息） ---'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result2 <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">question</span><span class="token operator">:</span> <span class="token string">&quot;我刚才说我来自哪里？&quot;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">configurable</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">sessionId</span><span class="token operator">:</span> <span class="token string">&quot;user-123&quot;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'问题: 我刚才说我来自哪里？'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'回答:'</span><span class="token punctuation">,</span> result2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 测试：第三次对话</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'--- 第三次对话（继续询问） ---'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> result3 <span class="token operator">=</span> <span class="token keyword">await</span> chain<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">question</span><span class="token operator">:</span> <span class="token string">&quot;我的爱好是什么？&quot;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">configurable</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">sessionId</span><span class="token operator">:</span> <span class="token string">&quot;user-123&quot;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'问题: 我的爱好是什么？'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'回答:'</span><span class="token punctuation">,</span> result3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>我们用 ChatPromptTemplate 创建 prompt，其中 history 对话历史用 MessagesPlaceholder 插入。</p> <p>在 map 里管理每个 sessionId 对应的 ChatMessageHistory</p> <p>然后创建 RunnableWithMessageHistory 的 chain，告诉它问题、回答都是从哪个字段取</p> <p>就是一个带memory的chain</p> <p><img src="/vuepress-notes/assets/img/image-20261005113223208.af5b9196.png" alt="image-20261005113223208"></p> <h3 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h3> <p>LangChain 的很多组件都继承了 Runnable 抽象类，而且也提供了很多 Runnable 的 api基于 Runnable 的 api 可以很简洁的组装好一条 chain，不用再写很多逻辑这个叫做 LangChain 表达式语言（LCEL）</p> <p>Runnable 的 api：</p> <ul><li>RunnableSequence：顺序执行</li> <li>RunnableLambda：把函数包装成</li> <li>RunnableRunnableMap：并行执行多个 chain，结果放在对象属性上</li> <li>RunnableBranch：if else 逻辑</li> <li>RouterRunnable：switch case 逻辑，根据 key 决定执行哪个</li> <li>chainRunnableEach：循环数组每个元素来调用</li> <li>chainRunnablePassthrough：拿到原始输入</li> <li>RunnablePick：取输入对象的某些属性返回</li> <li>RunnableWithMessageHistory：给 chain 加上 memory</li></ul></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablesequence" class="sidebar-link reco-side-runnablesequence" data-v-b57cc07c>RunnableSequence</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablelambda" class="sidebar-link reco-side-runnablelambda" data-v-b57cc07c>RunnableLambda</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablemap" class="sidebar-link reco-side-runnablemap" data-v-b57cc07c>RunnableMap</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablebranch" class="sidebar-link reco-side-runnablebranch" data-v-b57cc07c>RunnableBranch</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#routerrunnable" class="sidebar-link reco-side-routerrunnable" data-v-b57cc07c>RouterRunnable</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablepassthrough" class="sidebar-link reco-side-runnablepassthrough" data-v-b57cc07c>RunnablePassthrough</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnableeach" class="sidebar-link reco-side-runnableeach" data-v-b57cc07c>RunnableEach</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablepick" class="sidebar-link reco-side-runnablepick" data-v-b57cc07c>RunnablePick</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#runnablewithmessagehistory" class="sidebar-link reco-side-runnablewithmessagehistory" data-v-b57cc07c>RunnableWithMessageHistory</a></li><li class="level-3" data-v-b57cc07c><a href="/vuepress-notes/src/ai/Runnable%E7%BB%84%E8%A3%85chain.html#总结" class="sidebar-link reco-side-总结" data-v-b57cc07c>总结</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><div class="Sakura" data-v-248d85d6><canvas id="canvas_sakura" style="z-index:-1;" data-v-248d85d6></canvas></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/vuepress-notes/assets/js/app.052bc2ac.js" defer></script><script src="/vuepress-notes/assets/js/3.fb77ef7a.js" defer></script><script src="/vuepress-notes/assets/js/1.7b8619ea.js" defer></script><script src="/vuepress-notes/assets/js/12.d4f2389d.js" defer></script>
+  </body>
+</html>
