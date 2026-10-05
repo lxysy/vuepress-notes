@@ -805,3 +805,599 @@ FewShotPromptTemplate 可以结合其他 PromptTemplate 一起用，通过 Pipel
 总结：**FewShotPromptTemplate 就是把「多条示例 + 前缀说明 + 最终指令」自动拼装成完整提示词的工具**，避免了手动用字符串拼接示例的麻烦
 
 ### ExampleSelector
+
+```js
+import 'dotenv/config';
+import { ChatOpenAI } from '@langchain/openai';
+import {
+  FewShotPromptTemplate,
+  PromptTemplate,
+} from '@langchain/core/prompts';
+import { LengthBasedExampleSelector } from '@langchain/core/example_selectors';
+
+// 演示：使用 LengthBasedExampleSelector 自动选择「长度合适」的 few-shot 示例
+
+// 1. 初始化 Chat 模型
+const model = new ChatOpenAI({
+  modelName: process.env.MODEL_NAME,
+  apiKey: process.env.OPENAI_API_KEY,
+  temperature: 0,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+});
+
+// 2. 定义单条示例的 Prompt 模板
+const examplePrompt = PromptTemplate.fromTemplate(
+  `用户需求：{user_requirement}
+周报片段示例：
+{report_snippet}
+---`
+);
+
+// 3. 构造一批「长度差异明显」的示例，方便观察选择效果
+const examples = [
+  {
+    user_requirement: '本周主要在做基础设施稳定性治理，想突出风险控制。',
+    report_snippet:
+      `- 核心链路共处理 P1 级别故障 1 起，P2 故障 2 起，均在 SLA 内完成处置；\n` +
+      `- 对 5 个高风险接口补充了限流与熔断策略，覆盖 80% 高峰流量；\n` +
+      `- 新增 6 条针对延迟抖动的告警规则，减少漏报风险。`,
+  },
+  {
+    user_requirement: '偏向对外展示成果，多写一些亮点和业务价值。',
+    report_snippet:
+      `- 上线「实时订单看板」，支持业务实时查看转化漏斗；\n` +
+      `- 打通埋点 → 数据仓库 → 实时服务的闭环，支撑后续精细化运营；\n` +
+      `- 完成 2 场内部分享，会后收到 15 条正向反馈。`,
+  },
+  {
+    user_requirement:
+      '只是想要一个非常简短的周报，两三句话就够了，主要告诉老板「一切稳定」即可。',
+    report_snippet: `本周整体运行平稳，未发生重大事故，核心指标均在预期范围内。`,
+  },
+  {
+    user_requirement:
+      '需要一份比较详细的技术周报，涵盖研发、测试、上线、监控等各个环节，篇幅可以略长。',
+    report_snippet:
+      `- 研发：完成结算服务重构第一阶段，拆分出 3 个独立子服务，接口延迟较旧架构下降约 35%；\n` +
+      `- 测试：补齐 20+ 条关键路径自动化用例，整体用例数量提升到 180 条，回归时间从 2 天缩短到 0.5 天；\n` +
+      `- 上线：采用灰度 + Canary 策略，期间监控到 2 次轻微指标抖动，均在 5 分钟内回滚处理；\n` +
+      `- 监控：新增 8 条核心告警和 3 个 SLO 指标，后续会结合值班反馈继续收敛噪音告警。`,
+  },
+];
+
+// 4. 创建 LengthBasedExampleSelector
+const exampleSelector = await LengthBasedExampleSelector.fromExamples(examples, {
+  examplePrompt,
+  // 这里简单地用字符长度近似控制，真实项目中可以配合 token 估算
+  maxLength: 700,
+  getTextLength: (text) => text.length,
+});
+
+// 5. 基于 selector 构建 FewShotPromptTemplate
+const fewShotPrompt = new FewShotPromptTemplate({
+  examplePrompt,
+  exampleSelector,
+  prefix:
+    '下面是一些不同风格和长度的周报片段示例，你可以从中学习语气和结构：\n',
+  suffix:
+    '\n\n现在请根据上面的示例风格，为下面这个场景写一份新的周报：\n' +
+    '场景描述：{current_requirement}\n' +
+    '请输出一份适合发给老板和团队同步的 Markdown 周报草稿。',
+  inputVariables: ['current_requirement'],
+});
+
+// 6. 演示：给定一个较长/较复杂的需求，让 selector 自动选出合适的示例
+const currentRequirement =
+  '我们本周在做「内部 AI 助手」项目，既有稳定性保障（处理线上问题），' +
+  '也有新功能上线（接入知识库、日志检索）。希望周报既能体现「把坑都兜住了」，' +
+  '又能展示一部分业务侧能感知到的亮点。';
+
+
+const finalPrompt = await fewShotPrompt.format({
+  current_requirement: currentRequirement,
+});
+
+// console.log(finalPrompt);
+
+const finalPrompt2 = await fewShotPrompt.format({
+    current_requirement: '',
+});
+
+console.log(finalPrompt2);
+
+// const stream = await model.stream(finalPrompt);
+// console.log('\n=== AI 输出 ===');
+// for await (const chunk of stream) {
+//   process.stdout.write(chunk.content);
+// }
+
+```
+
+![image-20260922095556581](./img/image-20260922095556581.png)
+
+可以看到这里ai选择了四个示例
+
+使用 LengthBasedExampleSelector 自动选择「长度合适」的 few-shot 示例
+
+这里用maxLength去限制了字符长度
+
+
+
+我们试一下插入数据到数据库，后来通过实例提示词语义检索
+
+```js
+import 'dotenv/config';
+import { MilvusClient, DataType, MetricType, IndexType } from '@zilliz/milvus2-sdk-node';
+import { OpenAIEmbeddings } from '@langchain/openai';
+
+const COLLECTION_NAME = 'weekly_report_examples';
+const VECTOR_DIM = 1024;
+
+const EXAMPLES = [
+  {
+    scenario:
+      '支付系统稳定性治理，强调风险防控、告警收敛和应急预案完善。',
+    report_snippet:
+      `- 本周聚焦支付链路稳定性，共处理 P1 事故 1 起、P2 事故 2 起，均在 SLA 内完成修复；\n` +
+      `- 针对历史高频超时问题，完成 3 个关键接口的超时阈值和重试策略优化；\n` +
+      `- 优化告警策略，合并冗余告警 10 条，新增 5 条基于 SLO 的告警规则。`,
+  },
+  {
+    scenario:
+      '新功能首发，更多是对外展示亮点，如新看板、新能力上线，适合发给大量跨部门同学。',
+    report_snippet:
+      `- 上线「运营实时看板」，支持业务实时查看核心转化漏斗；\n` +
+      `- 打通埋点 → DWD → 实时服务链路，为后续精细化运营提供基础；\n` +
+      `- 组织 2 场跨部门分享，帮助非技术同学理解新能力的业务价值。`,
+  },
+  {
+    scenario:
+      '重大版本发布节奏紧凑，需要对外同步一揽子新能力，强调可视化展示和业务价值。',
+    report_snippet:
+      `- 正式发布「增长分析 2.0」版本，新增留存分群、活动追踪等 5 项核心能力；\n` +
+      `- 与市场同学联合输出发布解读文档，并在周会中向核心干系人进行路演；\n` +
+      `- 配合运营梳理了 3 条重点推广场景，推动更多业务线接入新能力。`,
+  },
+  {
+    scenario:
+      '偏向产品体验优化和灰度试点，虽然不是大规模首发，但需要让老板看到长期产品线升级方向。',
+    report_snippet:
+      `- 针对「自助配置」后台完成一轮体验优化，减少 3 个关键操作步骤，提升整体可用性；\n` +
+      `- 在小流量场景下灰度上线「智能推荐」能力，观察首周转化率提升约 3 个百分点；\n` +
+      `- 拉通产品、运营和数据同学，对后续两个月的产品升级路线图达成一致。`,
+  },
+  {
+    scenario:
+      '技术债清理为主，核心工作是重构、单测补齐、文档完善，节奏偏稳，不强调对外大新闻。',
+    report_snippet:
+      `- 对老旧结算模块进行分层重构，拆出 3 个独立子模块，代码结构更加清晰；\n` +
+      `- 补齐 25 条关键路径单元测试用例，整体覆盖率从 55% 提升到 68%；\n` +
+      `- 完成 2 份系统设计文档补全，方便后续同学接手维护。`,
+  },
+  {
+    scenario:
+      '以老系统拆分和代码瘦身为主，更多是内部质量提升，重点在于风险可控和长期维护成本下降。',
+    report_snippet:
+      `- 拆分历史「大单体」服务中的账务子模块，沉淀为独立结算服务，减少跨模块耦合；\n` +
+      `- 清理 30+ 条废弃接口和配置项，并在网关层加保护，降低后续演进阻力；\n` +
+      `- 对关键重构路径补充回滚预案和演练手册，保证发布过程可控。`,
+  },
+  {
+    scenario:
+      '聚焦测试补齐和监控完善，希望通过一轮技术债治理把「隐性风险」暴露并关掉。',
+    report_snippet:
+      `- 新增 40+ 条端到端回归用例，覆盖主交易链路和高风险边界场景；\n` +
+      `- 完成核心链路埋点和监控指标补齐，为后续 SLO 建设打下基础；\n` +
+      `- 针对本周发现的 3 个潜在性能瓶颈，拉齐改造方案并排入后续技术债清单。`,
+  },
+  {
+    scenario:
+      '偏向团队协作和流程优化，比如值班轮值、需求评审机制、跨团队沟通等软性建设。',
+    report_snippet:
+      `- 完成新一轮值班排班和值班手册更新，降低新同学值班心理压力；\n` +
+      `- 优化需求评审流程，引入「技术风险清单」模板，帮助更早发现潜在问题；\n` +
+      `- 与运维、产品同学一起梳理了故障复盘模板，后续复盘将更聚焦于可执行改进项。`,
+  },
+];
+
+const embeddings = new OpenAIEmbeddings({
+  apiKey: process.env.OPENAI_API_KEY,
+  model: process.env.EMBEDDINGS_MODEL_NAME,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+  dimensions: VECTOR_DIM,
+});
+
+// 初始化 Milvus 客户端
+const client = new MilvusClient({
+  address: process.env.MILVUS_ADDRESS ?? 'localhost:19530',
+});
+
+/**
+ * 获取文本的向量嵌入
+ */
+async function getEmbedding(text) {
+  const result = await embeddings.embedQuery(text);
+  return result;
+}
+
+/**
+ * 创建或获取集合
+ */
+async function ensureCollection() {
+  try {
+    // 检查集合是否存在
+    const hasCollection = await client.hasCollection({
+      collection_name: COLLECTION_NAME,
+    });
+
+    if (!hasCollection.value) {
+      console.log('创建集合...');
+      await client.createCollection({
+        collection_name: COLLECTION_NAME,
+        fields: [
+          {
+            name: 'id',
+            data_type: DataType.VarChar,
+            max_length: 100,
+            is_primary_key: true,
+          },
+          {
+            name: 'scenario',
+            data_type: DataType.VarChar,
+            max_length: 2000,
+          },
+          {
+            name: 'report_snippet',
+            data_type: DataType.VarChar,
+            max_length: 10000,
+          },
+          {
+            name: 'vector',
+            data_type: DataType.FloatVector,
+            dim: VECTOR_DIM,
+          },
+        ],
+      });
+      console.log('✓ 集合创建成功');
+
+      // 创建索引
+      console.log('创建索引...');
+      await client.createIndex({
+        collection_name: COLLECTION_NAME,
+        field_name: 'vector',
+        index_type: IndexType.IVF_FLAT,
+        metric_type: MetricType.COSINE,
+        params: { nlist: 1024 },
+      });
+      console.log('✓ 索引创建成功');
+    }
+
+    // 确保集合已加载
+    try {
+      await client.loadCollection({ collection_name: COLLECTION_NAME });
+      console.log('✓ 集合已加载');
+    } catch (error) {
+      console.log('✓ 集合已处于加载状态');
+    }
+  } catch (error) {
+    console.error('创建集合时出错:', error.message);
+    throw error;
+  }
+}
+
+/**
+ * 将周报示例插入到 Milvus
+ */
+async function insertExamples() {
+  try {
+    if (EXAMPLES.length === 0) {
+      return 0;
+    }
+
+    console.log(`\n开始生成向量并插入 ${EXAMPLES.length} 条周报示例...`);
+
+    const insertData = await Promise.all(
+      EXAMPLES.map(async (example, index) => {
+        // 这里用 scenario + report_snippet 作为向量文本
+        const vector = await getEmbedding(example.scenario + example.report_snippet);
+        return {
+          id: `weekly_${index + 1}`,
+          scenario: example.scenario,
+          report_snippet: example.report_snippet,
+          vector,
+        };
+      })
+    );
+
+    const insertResult = await client.insert({
+      collection_name: COLLECTION_NAME,
+      data: insertData,
+    });
+
+    const insertedCount = Number(insertResult.insert_cnt) || 0;
+    console.log(`✓ 已插入 ${insertedCount} 条记录`);
+    return insertedCount;
+  } catch (error) {
+    console.error('插入周报示例时出错:', error.message);
+    console.error('错误详情:', error);
+    throw error;
+  }
+}
+
+/**
+ * 主函数
+ */
+async function main() {
+  try {
+    console.log('='.repeat(80));
+    console.log('周报示例写入 Milvus');
+    console.log('='.repeat(80));
+
+    // 连接 Milvus
+    console.log('\n连接 Milvus...');
+    await client.connectPromise;
+    console.log('✓ 已连接\n');
+
+    // 确保集合存在
+    await ensureCollection();
+
+    // 插入示例数据
+    await insertExamples();
+
+    console.log('='.repeat(80));
+    console.log('写入完成！');
+    console.log('='.repeat(80));
+  } catch (error) {
+    console.error('\n错误:', error.message);
+    console.error(error.stack);
+    process.exit(1);
+  }
+}
+
+main();
+```
+
+![image-20260922210424796](./img/image-20260922210424796.png)
+
+####  **FewShotPromptTemplate**
+
+然后根据存储的提示词示例，使用FewShotPromptTemplate去语义检索出相近的示例加入最终的提示词
+
+prompt-template-test\src\example-selector2.mjs
+
+```js
+import 'dotenv/config';
+import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai';
+import {
+  FewShotPromptTemplate,
+  PromptTemplate,
+} from '@langchain/core/prompts';
+import { SemanticSimilarityExampleSelector } from '@langchain/core/example_selectors';
+import { Milvus } from '@langchain/community/vectorstores/milvus';
+
+// 演示：使用 SemanticSimilarityExampleSelector 基于「语义相似度」自动从 Milvus 中选择 few-shot 示例
+
+const COLLECTION_NAME =
+  process.env.MILVUS_COLLECTION_NAME ?? 'weekly_report_examples';
+const VECTOR_DIM = 1024;
+
+// 1. 初始化 Chat 模型
+const model = new ChatOpenAI({
+  temperature: 0,
+  model: process.env.MODEL_NAME,
+  apiKey: process.env.OPENAI_API_KEY,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+});
+
+// 2. 初始化 embeddings
+const embeddings = new OpenAIEmbeddings({
+  apiKey: process.env.EMBEDDINGS_OPENAI_API_KEY,
+  model: process.env.EMBEDDINGS_MODEL_NAME,
+  configuration: {
+    baseURL: process.env.EMBEDDINGS_OPENAI_BASE_URL,
+  },
+  dimensions: VECTOR_DIM,
+});
+
+// 3. 定义单条示例 Prompt 模板
+const examplePrompt = PromptTemplate.fromTemplate(
+  `用户场景：{scenario}
+生成的周报片段：
+{report_snippet}
+---`
+);
+
+// 4. 连接 Milvus，并基于已存在的集合创建向量库
+const milvusAddress = process.env.MILVUS_ADDRESS ?? 'localhost:19530';
+
+const vectorStore = await Milvus.fromExistingCollection(embeddings, {
+  collectionName: COLLECTION_NAME,
+  clientConfig: {
+    address: milvusAddress,
+  },
+  // 与 weekly-report-examples-writer-milvus.mjs 中创建的索引保持一致
+  indexCreateOptions: {
+    index_type: 'IVF_FLAT',
+    metric_type: 'COSINE',
+    params: { nlist: 1024 },
+    search_params: {
+      nprobe: 10,
+    },
+  },
+});
+
+const exampleSelector = new SemanticSimilarityExampleSelector({
+  vectorStore,
+  k: 2, // 每次只选出语义上最相近的 2 条示例
+});
+
+// 5. 用 selector 构建 FewShotPromptTemplate
+const fewShotPrompt = new FewShotPromptTemplate({
+  examplePrompt,
+  exampleSelector,
+  prefix:
+    '下面是一些不同类型的周报示例，你可以从中学习语气和结构（系统会自动从 Milvus 选出和当前场景最相近的示例）：\n',
+  suffix:
+    '\n\n现在请根据上面的示例风格，为下面这个场景写一份新的周报：\n' +
+    '场景描述：{current_scenario}\n' +
+    '请输出一份适合发给老板和团队同步的 Markdown 周报草稿。',
+  inputVariables: ['current_scenario'],
+});
+
+// 6. 演示：给定几个不同的场景描述，让 selector 挑出语义上最接近的示例
+const currentScenario1 =
+  '我们本周主要是在清理历史技术债：重构老旧的订单模块、补齐核心接口的单测，' +
+  '同时也完善了一些文档，方便后面新人接手。整体没有对外大范围发布的新功能。';
+
+// 一个语义上明显不同的场景：偏「首发上线 + 对外宣传」
+const currentScenario2 =
+  '本周完成新一代运营看板的首批功能上线，重点打通埋点和实时数仓链路，' +
+  '并面向运营和市场同学做了多场宣讲，希望更多同学开始使用新能力。';
+
+console.log('\n===== 场景 1：技术债清理为主 =====\n');
+const finalPrompt1 = await fewShotPrompt.format({
+  current_scenario: currentScenario1,
+});
+console.log(finalPrompt1);
+
+console.log('\n\n===== 场景 2：新功能首发 + 对外宣传 =====\n');
+const finalPrompt2 = await fewShotPrompt.format({
+  current_scenario: currentScenario2,
+});
+console.log(finalPrompt2);
+
+// 如果需要真正调用模型，可以解开下面注释
+// const stream = await model.stream(finalPrompt);
+// console.log('\n=== AI 输出 ===');
+// for await (const chunk of stream) {
+//   process.stdout.write(chunk.content);
+// }
+
+
+```
+
+![image-20260922211058056](./img/image-20260922211058056.png)
+
+#### FewShotChatMessagePromptTemplate
+
+也就是对话形式的 prompt
+
+```js
+import 'dotenv/config';
+import { ChatOpenAI } from '@langchain/openai';
+import {
+  ChatPromptTemplate,
+  FewShotChatMessagePromptTemplate,
+} from '@langchain/core/prompts';
+
+// 一个最小可跑的 FewShotChatMessagePromptTemplate 示例，不依赖向量库 / example selector
+
+// 1. 初始化 Chat 模型
+const model = new ChatOpenAI({
+  temperature: 0.3,
+  model: process.env.MODEL_NAME,
+  apiKey: process.env.OPENAI_API_KEY,
+  configuration: {
+    baseURL: process.env.OPENAI_BASE_URL,
+  },
+});
+
+// 2. few-shot 示例：每条示例是「human 问 + ai 答」的聊天片段
+const EXAMPLES = [
+  {
+    input: '本周主要推进支付稳定性治理，做了事故处置、告警优化和演练。',
+    output:
+      '- 本周围绕支付链路稳定性开展治理工作：完成 1 起 P1 事故与 2 起 P2 事故的排查与修复，均在 SLA 内关闭；\n' +
+      '- 梳理并合并冗余告警规则 8 条，新建 4 条基于 SLO 的告警，大幅降低无效告警噪音；\n' +
+      '- 组织 1 次故障应急演练，验证支付核心链路的应急预案可行性。',
+  },
+  {
+    input: '本周交付了新运营看板，并给业务同学做了多场分享。',
+    output:
+      '- 上线新一代「运营实时看板」，支持业务实时查看关键转化指标和漏斗数据；\n' +
+      '- 衔接埋点、数据仓库与可视化链路，为后续精细化运营提供统一数据口径；\n' +
+      '- 面向市场和运营团队组织 2 场产品培训，帮助非技术同学理解看板核心能力和使用场景。',
+  },
+];
+
+// 3. 把上面的结构映射为 FewShotChatMessagePromptTemplate 可用的 examples
+const fewShotExamples = new FewShotChatMessagePromptTemplate({
+  examplePrompt: ChatPromptTemplate.fromMessages([
+    [
+      'human',
+      '下面是本周的工作概述：\n{input}\n\n请帮我整理成适合发在团队周报里的要点列表。',
+    ],
+    ['ai', '{output}'],
+  ]),
+  examples: EXAMPLES,
+  exampleSeparator: '\n\n', // 可选：示例之间的分隔符，仅影响 formatMessages 输出
+  inputVariables: [], // 示例本身不依赖运行时变量
+});
+
+// 4. 把 few-shot 示例和最终用户输入组合成一个完整的 ChatPromptTemplate
+const chatPrompt = ChatPromptTemplate.fromMessages([
+  [
+    'system',
+    '你是一名资深技术负责人，请根据给定的工作内容，参考上面的示例，帮我写一段结构清晰、重点突出的周报片段（使用 Markdown 列表）。',
+  ],
+  [
+    'system',
+    '下面是若干参考示例，请重点学习它们的「表达方式和结构」，而不是照搬具体内容：',
+  ],
+  fewShotExamples,
+  [
+    'human',
+    '这是我本周的实际工作内容，请帮我整理成周报：\n{current_work}',
+  ],
+]);
+
+// 5. 演示：给一个简单的当前工作内容，跑通整个链路
+const currentWork =
+  '本周完成了订单模块的一轮重构，拆分了历史遗留的大文件，并补齐了核心路径的单测；' +
+  '同时修复了两起线上性能问题，并把指标接入统一监控看板。';
+
+async function main() {
+  // 组装成消息
+  const messages = await chatPrompt.formatMessages({
+    current_work: currentWork,
+  });
+
+  console.log('\n===== 发送给模型的消息 =====\n');
+  console.log(messages);
+
+  // 如果你配置了模型，可以真正调用一次
+  try {
+    const stream = await model.stream(messages);
+    console.log('\n===== 模型输出 =====\n');
+    for await (const chunk of stream) {
+      process.stdout.write(chunk.content);
+    }
+    console.log('\n');
+  } catch (e) {
+    console.log(
+      '\n（提示：如需真实调用模型，请确认已配置 MODEL_NAME / OPENAI_API_KEY / OPENAI_BASE_URL）',
+    );
+  }
+}
+
+main();
+```
+
+和 FewShotPromptTempalate 的区别只不过是现在示例变成了 ai 和 human 的对话历史了
+
+![image-20260922211653039](./img/image-20260922211653039.png)
+
+### 总结
+
+- PromptTemplate：提示词模版，可以填入占位符变量
+- ChatPromptTemplate：对话形式（messages 数组）的提示词模版
+- FewShotPromptTemplate：生成带示例的提示词模版
+- FewShotChatTemplatePromptTemplate：生成带示例的提示词模版，对话形式
+- LengthBasedExampleSelector：根据长度选择合适的示例
+- SemanticSimilarityExampleSelector：选择语义相近的示例 PipelinePromptTemplate：合并多个 Prompt Template 成一个大的 Prompt Template
