@@ -984,7 +984,7 @@ export class HighlightDirective {
 <p appHighlight="red" defaultColor="violet">Highlight me!</p>
 ```
 
-![image-20230104163549985](./img/angular1.png)
+![image-20230104163549985](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/font/img/angular1.webp)
 
 ### 内置结构型指令
 
@@ -1137,7 +1137,7 @@ Angular 的 `<ng-container>` 是一个分组元素，它不会干扰样式或布
 </select>
 ```
 
-![image-20230104163151402](./img/angular2.png)
+![image-20230104163151402](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/font/img/angular2.webp)
 
 **`ngSwitch`**
 
@@ -1230,7 +1230,7 @@ export class UserService {
 
 依赖项注入（DI）是一种设计模式，在这种设计模式中，类会从外部源请求依赖项而不是创建它们。Angular 的 DI 框架会在实例化某个类时为其提供依赖。
 
-![image-20230302112648926](./img/angular3.png)
+![image-20230302112648926](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/font/img/angular3.webp)
 
 - **注入器**
 
@@ -1507,7 +1507,7 @@ Angular 会为每个 DOM 元素隐式创建 `ElementInjector`。
 
 组件和指令都可使用`providers`属性注册提供者
 
-![注入器层次](./img/angular4.png)
+![注入器层次](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/font/img/angular4.webp)
 
 ### 解析规则
 
@@ -1568,7 +1568,7 @@ class Person {
 
 参考[案例](https://angular.cn/guide/hierarchical-dependency-injection#providing-services-in-component)
 
-![image-20230303154401907](./img/angular5.png)
+![image-20230303154401907](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/font/img/angular5.webp)
 
 
 

@@ -3,3 +3,8 @@ docs/.vuepress/dist
 .playwright-mcp/
 *.stackdump
 .claude/scheduled_tasks.lock
+
+# 图床仓库的本地工作副本（由 scripts/images.js 自动克隆）
+.assets-repo/
+# 上传后从仓库移走的本地图片，保留一段时间便于找回
+.images-trash/

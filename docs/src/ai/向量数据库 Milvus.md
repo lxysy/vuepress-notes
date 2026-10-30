@@ -34,7 +34,7 @@ web 应用会把数据存在 mysql 里，基于对数据的增删改查实现各
 
 所以一般会做 mysql 和 milvus 的双写，也就是同时对两个数据库做增删改，保持数据同步
 
-![Milvus](./img/Milvus.png)
+![Milvus](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/Milvus.webp)
 
 删除直接根据 id，不需要嵌入模型
 
@@ -78,13 +78,13 @@ docker compose -f ./milvus-standalone-docker-compose.yml up -d
 然后点击 Apply & Restart，等 Docker 重启后再执行：
   `docker compose -f ./milvus-standalone-docker-compose.yml up -d`
 
-![image-20260722223734830](./img/image-20260722223734830.png)
+![image-20260722223734830](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722223734830.png)
 
 跑起来后可在docker desktop中看到运行的镜像和容器
 
-![image-20260722221437827](./img/image-20260722221437827.png)
+![image-20260722221437827](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722221437827.webp)
 
-![image-20260722221449597](./img/image-20260722221449597.png)
+![image-20260722221449597](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722221449597.webp)
 
 milvus 数据库是跑在 19530 这个端口
 
@@ -100,7 +100,7 @@ http://localhost:9091/healthz
 
 https://github.com/zilliztech/attu/releases
 
-![image-20260722224642819](./img/image-20260722224642819.png)
+![image-20260722224642819](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722224642819.png)
 
 ### 插入数据
 
@@ -233,7 +233,7 @@ main();
 
 这就是schema
 
-![image-20260722221800369](./img/image-20260722221800369.png)
+![image-20260722221800369](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722221800369.png)
 
 和 mysql 的表差不多，唯一的区别是 vector 这个字段，我们设置了 FloatVector 类型，也就是向量，指定维度是 1024 维
 
@@ -267,7 +267,7 @@ VECTOR_DIM 也就是告诉 AI 生成 1024 维的向量
 
 告诉 Milvus 存储的向量是 1024 维的浮点数组。**这个维度必须和 embedding 模型输出的维度一致**，否则插入或搜索会报错
 
-![image-20260722221831375](./img/image-20260722221831375.png)
+![image-20260722221831375](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722221831375.webp)
 
 分为多个 database，每个 database 下有多个 collection  
 
@@ -277,7 +277,7 @@ VECTOR_DIM 也就是告诉 AI 生成 1024 维的向量
 
  同时要建立一个向量字段的索引，用来快速查询
 
-![image-20260722222024899](./img/image-20260722222024899.png)
+![image-20260722222024899](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722222024899.png)
 
 这个索引是 **向量索引**，专门加在 `vector` 字段上，目的是**加速相似性搜索**。
 
@@ -295,11 +295,11 @@ VECTOR_DIM 也就是告诉 AI 生成 1024 维的向量
 
  运行代码：
 
-![image-20260722222936338](./img/image-20260722222936338.png)
+![image-20260722222936338](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722222936338.png)
 
 可以看到成功插入
 
-![image-20260722224751107](./img/image-20260722224751107.png)
+![image-20260722224751107](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722224751107.webp)
 
 vector 是向量，用来做语义检索的
 
@@ -371,7 +371,7 @@ async function main() {
 main();
 ```
 
-![image-20260722231601163](./img/image-20260722231601163.png)
+![image-20260722231601163](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722231601163.png)
 
 用 metric_type: MetricType.COSINE，所以 Score = 余弦相似度（Cosine Similarity），范围在 0~1 之间。
 
@@ -533,7 +533,7 @@ main();
 
 
 
-![image-20260722233046955](./img/image-20260722233046955.png)
+![image-20260722233046955](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722233046955.png)
 
 就是多了从milvus语义检索到相关知识
 
@@ -608,9 +608,9 @@ async function main() {
 main();
 ```
 
-![image-20260722233657684](./img/image-20260722233657684.png)
+![image-20260722233657684](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722233657684.png)
 
-![image-20260722233716291](./img/image-20260722233716291.png)
+![image-20260722233716291](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722233716291.webp)
 
 调用 upsert 方法，数据里带上 id 即可
 
@@ -681,7 +681,7 @@ main();
 
 我们这里删了一个 mood 为 sad 的，一个 id 为 2、3 的，一个 id 为 5 的
 
-![image-20260722234116218](./img/image-20260722234116218.png)
+![image-20260722234116218](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260722234116218.png)
 
 ### 总结
 

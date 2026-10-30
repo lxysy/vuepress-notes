@@ -18,7 +18,7 @@ Loader（文档加载器）和 Splitter（文本分割器）是构建 RAG 知识
 
 但是实际上的知识来源有很多，这时候就需要用各种 loader 来转换
 
-![](img/loader-flow.png)
+![](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/loader-flow.webp)
 
 这里参考  [langchain 的 loader](https://docs.langchain.com/oss/python/integrations/document_loaders#common-file-types)
 
@@ -34,13 +34,13 @@ Loader（文档加载器）和 Splitter（文本分割器）是构建 RAG 知识
 >
 > LangChain推荐使用RecursiveCharacterTextSplitter，它会优先按段落拆分，若超过设定长度（如800字符）再逐级缩小粒度，避免硬切分导致的语义破碎。常见配置中，技术文档建议800字符/100重叠，FAQ可缩短至300字符
 
-![](img/247a4a008e54e2a5689372317d472c30e3412763.png)
+![](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/247a4a008e54e2a5689372317d472c30e3412763.webp)
 
 但并不是每一行一个 Document，而是要设置一个 chunk size，按照换行符分割好的内容加入到这个 Chunk，当达到 chunk size 后，再继续生成下个 Chunk。
 
 这个 Chunk 也是 Document 对象，只是文档内容是分割好的一个个大小合适的块
 
-![](img/9fa05c876021667672c7bc8a55b5edab4094bd72.png)
+![](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/9fa05c876021667672c7bc8a55b5edab4094bd72.webp)
 
 ## Loader + Splitter 基础示例
 
@@ -74,7 +74,7 @@ console.log(splitDocuments);
 
 运行下：
 
-![image-20260716205838929](./img/image-20260716205838929.png)
+![image-20260716205838929](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260716205838929.webp)
 
 可以看到，文档被分成了 4 个小的文档。 
 
@@ -204,7 +204,7 @@ ${context}
 }
 ```
 
-![image-20260716205916652](./img/image-20260716205916652.png)
+![image-20260716205916652](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260716205916652.webp)
 
 ## 常见文件格式的 Loader
 

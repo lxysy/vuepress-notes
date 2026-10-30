@@ -17,8 +17,11 @@
     "vuepress-theme-reco": "1.6.17"
   },
   "scripts": {
-    "docs:dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
-    "docs:build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",
+    "docs:dev": "node scripts/vuepress.js dev docs",
+    "docs:build": "node scripts/vuepress.js build docs",
+    "images:sync": "node scripts/images.js sync",
+    "images:check": "node scripts/images.js check",
+    "images:prune": "node scripts/images.js prune",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

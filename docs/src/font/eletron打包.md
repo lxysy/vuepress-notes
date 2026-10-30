@@ -466,7 +466,7 @@ electron打包配置文件electron-builder.json如下：
 vite会将前端打包`vite-plugin-electron`负责在vite打包是提供eletron应用程序预览，并且提供热重载（HMR），他的配置项在vite.config.ts的plugin。electron中配置，原理可参考[掘金文章](https://juejin.cn/post/7085919755692933156)，[官方文档](https://vite.electron.js.cn/guide/core-plugins.html)，[vite插件](https://www.viterc.cn/en/vite-plugin-electron.html)
 
 文件结构为：
-![文件目录](./img/electron-structure.png)
+![文件目录](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/font/img/electron-structure.png)
 
 vite将主进程文件和预加载文件根据vite.config.ts中的配置编译压缩成common.js模块，并在package.json中的mian中指明electron入口
 

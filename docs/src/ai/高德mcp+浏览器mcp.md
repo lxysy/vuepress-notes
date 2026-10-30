@@ -20,7 +20,7 @@ tags:
 
 在高德开放平台注册并创建应用，申请api key，可参考官方文档：[快速接入-MCP Server|高德地图API](https://lbs.amap.com/api/mcp-server/gettingstarted)
 
-![image-20260714224632795](./img/image-20260714224632795.png)
+![image-20260714224632795](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260714224632795.png)
 
 在 trae 中配置好 mcp，可以看到可以调用的工具 tool
 
@@ -134,7 +134,7 @@ await mcpClient.close();
 
 运行之后结果如下：
 
-![image-20260714230147277](./img/image-20260714230147277.png)
+![image-20260714230147277](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260714230147277.png)
 
 可以看到成功，就是成功复用了别人的tool
 
@@ -159,7 +159,7 @@ await mcpClient.close();
 
 然后再trae中配置这个mcp，这里配置的时候直接写路径
 
-![image-20260714231343946](./img/image-20260714231343946.png)
+![image-20260714231343946](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260714231343946.png)
 
 ### 读写文件MCP
 
@@ -268,7 +268,7 @@ await mcpClient.close();
 
 除此之外，运行代码后会遇到高德api报错：
 
-![image-20260714233116086](./img/image-20260714233116086.png)
+![image-20260714233116086](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260714233116086.png)
 
 CUQPS_HAS_EXCEEDED_THE_LIMIT这个错误是高德地区的api请求 qps限制是个人版3 qps/s
 
@@ -285,7 +285,7 @@ await runAgentWithTools(
 
 成功调用
 
-![image-20260714233317076](./img/image-20260714233317076.png)
+![image-20260714233317076](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260714233317076.png)
 
 ### 浏览器MCP
 
@@ -435,4 +435,4 @@ await runAgentWithTools(
 
 最后运行代码
 
-![image-20260714235004764](./img/image-20260714235004764.png)
+![image-20260714235004764](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260714235004764.webp)

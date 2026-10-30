@@ -93,7 +93,7 @@ for await (const chunk of stream) {
 
 使用的时候使用format方法传入数据，然后就能生成好给大模型的prompt
 
-![组件化管理prompt-01](./img/component-prompt-01.png)
+![组件化管理prompt-01](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-01.png)
 
 有了这个prompt模板
 
@@ -122,7 +122,7 @@ for await (const chunk of stream) {
 }
 ```
 
-![0907](./img/0907.png)
+![0907](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/0907.png)
 
 现在都是一整个的 prompt，实际上可能需要按照角色、背景、任务、格式等来拆分管理 prompt，这样用的时候再组合
 
@@ -227,9 +227,9 @@ const pipelineFormatted = await pipelinePrompt.format({
 
 指定了一个 finalPrompt 最终的 prompt，以及它组合的所有 pipelinePrompts
 
-![组件化管理prompt-02](./img/component-prompt-02.png)
+![组件化管理prompt-02](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-02.png)
 
-![组件化管理prompt-03](./img/component-prompt-03.png)
+![组件化管理prompt-03](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-03.webp)
 
 这就相当于将prompt分块管理
 
@@ -310,7 +310,7 @@ console.log(promptForReview);
 
 创建季度总结的 prompt，前面的角色 + 背景部分 prompt 直接复用周报的
 
-![09071](./img/09071.png)
+![09071](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/09071.png)
 
 ### PipelinePrompt.partial
 
@@ -356,9 +356,9 @@ console.log(partialFormatted2);
 
 调用 `.partial({ company_name, company_values, tone })` 后，这三项被**固化**进去，返回一个新的 `PromptTemplate`，它只需要剩余变量：
 
-![09073](./img/09073.png)
+![09073](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/09073.png)
 
-![组件化管理prompt-04](./img/component-prompt-04.png)
+![组件化管理prompt-04](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-04.webp)
 
 ### ChatPromptTemplate
 
@@ -554,7 +554,7 @@ const chatMessages = await chatPrompt.formatMessages({
 
 然后用 formatPromptValue 这个方法拿到填入变量后的 messages 数组：
 
-![组件化管理prompt-05](./img/component-prompt-05.png)
+![组件化管理prompt-05](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-05.png)
 
 #### 第二种写法：
 
@@ -636,7 +636,7 @@ console.log(chatMessages);
 // console.log(response.content);
 ```
 
-![组件化管理prompt-06](./img/component-prompt-06.png)
+![组件化管理prompt-06](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-06.png)
 
 不是传入二维数组了，而是分别用 SystemMessagePromptTemplate、HumanMessagePromptTemplate 等创建具体的 PromptTemplate
 
@@ -723,7 +723,7 @@ console.log(formattedMessages.toChatMessages());
 
 ```
 
-![组件化管理prompt-07](./img/component-prompt-07.png)
+![组件化管理prompt-07](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-07.png)
 
 这里用 MessagesPlaceholder 来插入一段对话历史
 
@@ -794,7 +794,7 @@ const fewShotBlock = await fewShotPrompt.format({});
 console.log(fewShotBlock);
 ```
 
-![组件化管理prompt-08](./img/component-prompt-08.png)
+![组件化管理prompt-08](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/component-prompt-08.png)
 
 先用 PromptTemplate 创建了示例的 prompt 模版
 
@@ -915,7 +915,7 @@ console.log(finalPrompt2);
 
 ```
 
-![image-20260922095556581](./img/image-20260922095556581.png)
+![image-20260922095556581](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922095556581.png)
 
 可以看到这里ai选择了四个示例
 
@@ -1161,7 +1161,7 @@ async function main() {
 main();
 ```
 
-![image-20260922210424796](./img/image-20260922210424796.png)
+![image-20260922210424796](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922210424796.webp)
 
 ####  **FewShotPromptTemplate**
 
@@ -1282,7 +1282,7 @@ console.log(finalPrompt2);
 
 ```
 
-![image-20260922211058056](./img/image-20260922211058056.png)
+![image-20260922211058056](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922211058056.png)
 
 #### FewShotChatMessagePromptTemplate
 
@@ -1391,7 +1391,7 @@ main();
 
 和 FewShotPromptTempalate 的区别只不过是现在示例变成了 ai 和 human 的对话历史了
 
-![image-20260922211653039](./img/image-20260922211653039.png)
+![image-20260922211653039](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922211653039.webp)
 
 ### 总结
 

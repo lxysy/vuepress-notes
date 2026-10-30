@@ -1,0 +1,9 @@
+{
+  "repo": "lxysy/vuepress-notes-assets",
+  "cdn": "https://gcore.jsdelivr.net/gh",
+  "ref": "main",
+  "assetsDir": ".assets-repo",
+  "trashDir": ".images-trash",
+  "maxWidth": 1600,
+  "keepLocalCopy": false
+}

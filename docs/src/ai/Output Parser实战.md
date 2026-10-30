@@ -26,19 +26,19 @@ tags:
 
 在docker中搜索mysql镜像，点击run，会开始下载
 
-![image-20260804212911881](./img/image-20260804212911881.png)
+![image-20260804212911881](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804212911881.webp)
 
 填写参数运行
 
-![image-20260804213152095](./img/image-20260804213152095.png)
+![image-20260804213152095](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804213152095.webp)
 
-![image-20260804213320286](./img/image-20260804213320286.png)
+![image-20260804213320286](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804213320286.webp)
 
 容器就跑起来了
 
 然后去下载一个GUI工具连结它，这里用了官方的Mysql Workbench
 
-![image-20260804214816019](./img/image-20260804214816019.png)
+![image-20260804214816019](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804214816019.webp)
 
 ### 创建数据库和表
 
@@ -119,7 +119,7 @@ main().catch((err) => {
 
 跑一下，插入一条数据
 
-![image-20260804215645233](./img/image-20260804215645233.png)![image-20260804215801321](./img/image-20260804215801321.png)
+![image-20260804215645233](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804215645233.png)![image-20260804215801321](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804215801321.webp)
 
 ### AI智能录入
 
@@ -276,17 +276,17 @@ DeepSeek API（`api.deepseek.com`）**不支持 `json_schema` 这个 response_fo
 
 改了几个地方：
 
-![image-20260804222018566](./img/image-20260804222018566.png)
+![image-20260804222018566](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804222018566.png)
 
-![image-20260804222037787](./img/image-20260804222037787.png)
+![image-20260804222037787](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804222037787.png)
 
 运行后发现继续报错：
 
-![image-20260804223005140](./img/image-20260804223005140.png)
+![image-20260804223005140](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804223005140.png)
 
 注意：
 
-![image-20260804223024665](./img/image-20260804223024665.png)
+![image-20260804223024665](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804223024665.png)
 
 OpenAI 的函数调用规范（DeepSeek 是兼容实现）规定：**函数调用的 `arguments` 永远是 `{ ... }` 这种 JSON 对象**，因为调用一个函数就是把"参数名 → 参数值"传进去，不存在"一个函数就收一个数组"这种形态。所以 DeepSeek 直接拒绝：
 
@@ -463,9 +463,9 @@ async function main() {
 main();
 ```
 
-![image-20260804223317023](./img/image-20260804223317023.png)
+![image-20260804223317023](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804223317023.webp)
 
-![image-20260804223329745](./img/image-20260804223329745.png)
+![image-20260804223329745](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260804223329745.webp)
 
 可以看到成功插入数据
 
@@ -562,7 +562,7 @@ async function testNativeJsonSchema() {
 testNativeJsonSchema().catch(console.error);
 ```
 
-![image-20260805213401854](./img/image-20260805213401854.png)
+![image-20260805213401854](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805213401854.png)
 
  json schema 就和 tool 的 args 一样，都是大模型层面支持的，会保证按照这个格式来返回，如果格式不对，会在模型层面重新生成正确的返回  
 
@@ -572,7 +572,7 @@ testNativeJsonSchema().catch(console.error);
 
 之前写tool时的流程：
 
-![image-20260805213908811](./img/image-20260805213908811.png)
+![image-20260805213908811](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805213908811.webp)
 
 - 传入 SystemMessage 和 HumanMessage，调用大模型之后，返回 AIMessage
 - AIMessage 也加入 memory
@@ -587,9 +587,9 @@ testNativeJsonSchema().catch(console.error);
 
 返回的 AIMessage 是 chunk
 
-![image-20260805214510564](./img/image-20260805214510564.png)
+![image-20260805214510564](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805214510564.png)
 
-![image-20260805214654942](./img/image-20260805214654942.png)
+![image-20260805214654942](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805214654942.png)
 
 `chunk` 是 `@langchain/core` 的 **`AIMessageChunk`** 对象（消息块），不是普通的 `console.log` 能看到的全貌。在绑定了工具的流式场景下，每个 chunk 是一小片"增量"，多个 chunk 拼接起来才是完整的一次工具调用
 
@@ -695,7 +695,7 @@ try {
 }
 ```
 
-![image-20260805215952843](./img/image-20260805215952843.png)
+![image-20260805215952843](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805215952843.webp)
 
 可以看到这里的args里面是完整的json
 
@@ -704,7 +704,7 @@ try {
 - 返回的是 AIMessageChunk，需要 concat 拼接成完整的 AIMessage
 - AIMessageChunk 里的是 tool_call_chunks，只包含部分参数，需要用 JsonOutputToolsParser 来解析成 json
 
-![image-20260805220244331](./img/image-20260805220244331.png)
+![image-20260805220244331](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805220244331.webp)
 
 #### 实现Mini cusor
 
@@ -922,13 +922,13 @@ try {
 
 **5. 执行工具并回填结果**（[mini-cursor.mjs:144-155](vscode-webview://00tirqpivijkeevccub8cm2nirsjp6cdf8qlm02k6qktt68nep7h/output-parser-test/src/test/mini-cursor.mjs#L144-L155)） 如果有工具调用，逐个找到对应工具（`read_file`/`write_file`/`execute_command`/`list_directory`）执行，把结果包成 `ToolMessage`（带 `tool_call_id`）加进历史，然后进入下一轮迭代让 AI 看到工具结果继续思考。
 
-![image-20260805225412109](./img/image-20260805225412109.png)
+![image-20260805225412109](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805225412109.png)
 
 注意：
 
 1.使用AIMessage.concat拼接 AIMessageChunk 成完整 AIMessage
 
-![image-20260805225503040](./img/image-20260805225503040.png)
+![image-20260805225503040](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260805225503040.png)
 
 2. JsonOutputToolsParser 来解析 tool_call_chunks
 

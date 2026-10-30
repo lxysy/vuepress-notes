@@ -10,7 +10,7 @@ tags:
 
 # vue模板编译
 
-![image-20230322091038615](./img/template-process.png)
+![image-20230322091038615](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/vueNote/img/template-process.webp)
 
 大体逻辑上分为三部分：
 
@@ -74,9 +74,9 @@ parseHTML(template,{
 </div>
 ```
 
-![process1](./img/process1.png)
+![process1](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/vueNote/img/process1.webp)
 
-![process2](./img/process2.png)
+![process2](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/vueNote/img/process2.webp)
 
 运行原理：简单来就是用HTML模板字符串来循环，每轮循环都从HTML模板字符串来循环，每轮循环都截取一小段字符串，重复上过程，摘到HTML模板被截陈空串时结束。
 
@@ -110,7 +110,7 @@ start && const match = {
 
 以上正则匹配了一部分的开始标签，开始标签实际上被分为了三部分：
 
-![template](./img/template.png)
+![template](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/vueNote/img/template.webp)
 
 根据编译模板的整体逻辑，会将匹配的开始标签的一部分截取出去
 

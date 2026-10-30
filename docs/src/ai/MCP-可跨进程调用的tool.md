@@ -22,11 +22,11 @@ node 写的 ai agent 的代码，你的 tool 也得是 node 写
 目前两个解决方案：
 
 
-![mcp-stdio](./img/mcp-stdio.png)
+![mcp-stdio](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/mcp-stdio.webp)
 
 这里的 stdio 就是标准输入输出流，也就是键盘输入、控制台输出。当你进程跑一个子进程，就可以用这种方式通信
 
-![mcp-http](./img/mcp-http.png)
+![mcp-http](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/mcp-http.webp)
 
 现在是解决了跨语言调用工具的问题
 
@@ -36,7 +36,7 @@ node 写的 ai agent 的代码，你的 tool 也得是 node 写
 
 
 
-![mcp](./img/mcp.png)
+![mcp](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/mcp.webp)
 
 这个协议就叫MCP
 
@@ -218,7 +218,7 @@ Cursor (MCP Client)          my-mcp-server.mjs (MCP Server)
 
 然后查询，结果发现大模型就会去调用这个mcp了
 
-![image-20260709193311926](./img/image-20260709193311926.png)
+![image-20260709193311926](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260709193311926.webp)
 
 **这就是 mcp 的好处，写好之后可以插拔到任何地方当 tool 用**
 
@@ -226,9 +226,9 @@ Cursor (MCP Client)          my-mcp-server.mjs (MCP Server)
 
 不是用来作为 tool 触发的，而是可以引用用来写 prompt 之类的
 
-![image-20260709194037816](./img/image-20260709194037816.png)
+![image-20260709194037816](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260709194037816.png)
 
-![image-20260709194106528](./img/image-20260709194106528.png)
+![image-20260709194106528](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260709194106528.png)
 
 因为有了 mcp，除了 tare，别的软件同样可以调用这个服务,比如cursor
 
@@ -384,7 +384,7 @@ await mcpClient.close();
 
 运行：
 
-![image-20260709200038899](./img/image-20260709200038899.png)
+![image-20260709200038899](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260709200038899.png)
 
 和之前的原理一样，只是多了一步
 

@@ -46,7 +46,7 @@ const response = await model.invoke("介绍下自己");
 console.log(response.content);
 ```
 
-![image-20260708200848833](./img/image-20260708200848833.png)
+![image-20260708200848833](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260708200848833.png)
 
 这样就实现了模型的调用
 
@@ -184,7 +184,7 @@ console.log("\n[最终回复]");
 console.log(response.content);                            // 打印模型的最终回答
 ```
 
-![image-20260708204151469](./img/image-20260708204151469.png)
+![image-20260708204151469](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260708204151469.png)
 
 这里看到模型成功调用工具读取了文件
 
@@ -305,7 +305,7 @@ AIMessage {
 
 目标拓展之前的tool，实现执行命令、创建目录、读取文件、写文件等
 
-![](./img/mini-cursor.png)
+![](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/mini-cursor.webp)
 
 #### 执行命令tool
 
@@ -469,7 +469,7 @@ child.on("close", (code) => {
 
 最后运行，已经成功执行命令：
 
-![image-20260708220101667](./img/image-20260708220101667.png)
+![image-20260708220101667](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260708220101667.png)
 
 #### 封装所有tools
 
@@ -762,11 +762,11 @@ ChatOpenAI 模型  ── 绑定工具 ──→ modelWithTools
 
 运行代码后结果如下：
 
-![image-20260709162338855](./img/image-20260709162338855.png)
+![image-20260709162338855](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260709162338855.webp)
 
 这里看到大模型成功调用了我们的工具，且启动运行了项目：
 
-![image-20260709162454025](./img/image-20260709162454025.png)
+![image-20260709162454025](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260709162454025.webp)
 
 到这里为止就把所有的tool都用上了，读目录、写文件、读取文件、执行命令
 

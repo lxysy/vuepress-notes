@@ -2,3 +2,19 @@
   background-color: rgba(58,58,92,0.7);
   color: #fff;
 }
+
+// 图片由 markdown-it-image-size 注入了 width/height，主题只设了 max-width:100%。
+// 补上 height:auto，浏览器才会按固有比例等比缩放；同时 width/height 属性也会被
+// 用来在图片下载完成前预留正确高度，避免正文跳动影响大纲锚点定位。
+.theme-reco-content img
+  height auto
+
+// 原生锚点跳转（直接带 #hash 打开链接、或脚本回退路径）同样要避开固定导航栏。
+// 精确位置由 enhanceApp.js 里的滚动逻辑计算，这里只做兜底。
+.theme-reco-content h1,
+.theme-reco-content h2,
+.theme-reco-content h3,
+.theme-reco-content h4,
+.theme-reco-content h5,
+.theme-reco-content h6
+  scroll-margin-top 4.2rem

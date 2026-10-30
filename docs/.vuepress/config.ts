@@ -19,6 +19,8 @@ module.exports = {
   markdown: {
     extendMarkdown: md => {
       md.use(require('./mermaid/markdown-it-mermaid'));
+      // 为图片注入真实宽高，消除图片延迟加载导致的锚点定位偏移
+      md.use(require('./plugins/markdown-it-image-size'));
     }
   },
 

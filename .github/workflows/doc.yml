@@ -11,7 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # 主题未开启 lastUpdated，构建不依赖 git 历史，浅克隆即可省下大量 checkout 时间
+          fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -19,8 +20,6 @@ jobs:
         run: npm ci
       - name: Build VuePress site
         run: npm run docs:build
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

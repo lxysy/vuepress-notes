@@ -33,7 +33,7 @@ nest new hello-nest-langchain
 nest g res book --no-spec
 ```
 
-![image-20261011211430825](./img/image-20261011211430825.png)
+![image-20261011211430825](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011211430825.png)
 
 可以看到它是一个MVC架构
 
@@ -43,7 +43,7 @@ nest g res book --no-spec
 
 然后这些都是以 module 的形式组织，一个 module 里有 controller、service 等
 
-![architecture-doodle](./img/architecture-doodle.png)
+![architecture-doodle](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/architecture-doodle.webp)
 
 从根模块 AppModule 引入 BookModule
 
@@ -55,11 +55,11 @@ BookController 里的路由就会生效了
 
 比如这里用 @Injectable 声明了 BookService
 
-![image-20261011213004902](./img/image-20261011213004902.png)
+![image-20261011213004902](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011213004902.png)
 
 在hello-nest-langchain\src\book\book.controller.ts中在构造器声明了依赖：
 
-![image-20261011213225085](./img/image-20261011213225085.png)
+![image-20261011213225085](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011213225085.png)
 
 这样运行的时候就会自动注入 BookService 的实例对象
 
@@ -67,23 +67,23 @@ BookController 里的路由就会生效了
 
 这就是被叫做 providers 的原因
 
-![image-20261011213551590](./img/image-20261011213551590.png)
+![image-20261011213551590](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011213551590.png)
 
 就是一个用来提供某种能力的对象
 
 用 @Injectable 声明的 class 只是一种，还可以使用useFactory创建 provider：
 
-![image-20261011214532381](./img/image-20261011214532381.png)
+![image-20261011214532381](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011214532381.png)
 
 然后再service中使用这个名字来注入
 
 这里是属性注入，注入了一个bookRepository属性
 
-![image-20261011214941533](./img/image-20261011214941533.png)
+![image-20261011214941533](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011214941533.png)
 
 然后我们去访问 http://localhost:3000/book
 
-![image-20261011215611363](./img/image-20261011215611363.png)
+![image-20261011215611363](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011215611363.png)
 
 可以看到使用useFactory创建的provider也被注入了
 
@@ -101,19 +101,19 @@ pnpm install @langchain/core @langchain/openai
 nest g res ai --no-spec
 ```
 
-![image-20261011220158758](./img/image-20261011220158758.png)
+![image-20261011220158758](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261011220158758.png)
 
 然后在AiService 里调用 langchain 创建一个 chain
 
 
 
-![image-20261012202342703](./img/image-20261012202342703.png)
+![image-20261012202342703](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012202342703.png)
 
 使用@Inject 通过 key 在构造器里创建 一个model
 
 我们看对应的Contolller:
 
-![image-20261012204114803](./img/image-20261012204114803.png)
+![image-20261012204114803](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012204114803.png)
 
 在这里加了一个路由/ai/chat
 
@@ -129,7 +129,7 @@ pnpm i @nestjs/config
 
 然后在 AppModule 里引入 ConfigModule：
 
-![image-20261012205526798](./img/image-20261012205526798.png)
+![image-20261012205526798](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012205526798.png)
 
 它的作用就是读取 .env 配置文件，提供一个 service 来读配置
 
@@ -137,13 +137,13 @@ isGlobal 设置为 true 就是全局模块，也就是不用 imports 就可以�
 
 然后在根目录写上模型的配置，再看在ai.module.ts 中的使用
 
-![image-20261012210136753](./img/image-20261012210136753.png)
+![image-20261012210136753](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012210136753.png)
 
 然后我们访问对应的接口：
 
 [localhost:3000/ai/chat?query=ai agent学习路线](http://localhost:3000/ai/chat?query=ai agent学习路线)
 
-![image-20261012211505508](./img/image-20261012211505508.png)
+![image-20261012211505508](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012211505508.png)
 
 这样就完成了ai接口
 
@@ -155,13 +155,13 @@ isGlobal 设置为 true 就是全局模块，也就是不用 imports 就可以�
 
 SSE流程：
 
-![sse-flow](./img/langchain-nest-sse-01.png)
+![sse-flow](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/langchain-nest-sse-01.webp)
 
 服务端返回的 Content-Type 是 text/event-stream，这是一个流，可以多次返回内容
 
 我们在AiService 里加一个流式的接口：
 
-![image-20261012212956036](./img/image-20261012212956036.png)
+![image-20261012212956036](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012212956036.png)
 
 调用 chain 的 stream 方法，流式返回内容
 
@@ -169,7 +169,7 @@ SSE流程：
 
 这里不过分纠结这个语法，只用了解到我们在对应的Controller中是如何消费这个chunk的
 
-![image-20261012214124060](./img/image-20261012214124060.png)
+![image-20261012214124060](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012214124060.png)
 
 加了一个路由/ai/chat/stream
 
@@ -181,7 +181,7 @@ SSE流程：
 
 访问这个地址，此时就是流式返回了
 
-![image-20261012214616133](./img/image-20261012214616133.png)
+![image-20261012214616133](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012214616133.webp)
 
 #### 前端处理
 
@@ -193,11 +193,11 @@ SSE流程：
 pnpm i @nestjs/serve-static
 ```
 
-![image-20261012224611491](./img/image-20261012224611491.png)
+![image-20261012224611491](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012224611491.png)
 
 然后关注页面的逻辑部分：
 
-![image-20261012215605492](./img/image-20261012215605492.png)
+![image-20261012215605492](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012215605492.png)
 
 调用 EventSource 的 api，在 onmessage 回调里接收 data 就可以了
 
@@ -205,7 +205,7 @@ EventSource是浏览器的API,存在一些局限，比如**只能 GET，且无�
 
 访问静态页面：[SSE 流式接口测试](http://localhost:3000/sse-test.html)
 
-![image-20261012224656432](./img/image-20261012224656432.png)
+![image-20261012224656432](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261012224656432.webp)
 
 ### 补充
 

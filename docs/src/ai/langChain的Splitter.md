@@ -12,7 +12,7 @@ tags:
 
 来过一下 langChain 中封装好的 splitter
 
-![9fa05c876021667672c7bc8a55b5edab4094bd72](./img/9fa05c876021667672c7bc8a55b5edab4094bd72.png)
+![9fa05c876021667672c7bc8a55b5edab4094bd72](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/9fa05c876021667672c7bc8a55b5edab4094bd72.webp)
 
 回顾之前的流程和用法：
 
@@ -36,7 +36,7 @@ const splitDocuments = await textSplitter.splitDocuments(documents);
 
 来看langchain中的其他splitter
 
-![image-20260720201840835](./img/image-20260720201840835.png)
+![image-20260720201840835](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720201840835.webp)
 
 所有的 Splitter 都继承自 TextSplitter，包括RecursiveCharacterTextSplitter 等
 
@@ -44,7 +44,7 @@ const splitDocuments = await textSplitter.splitDocuments(documents);
 
 这里提一下这个库，它时 OpenAI 模型的 BPE 分词器
 
-![image-20260720214509599](./img/image-20260720214509599.png)
+![image-20260720214509599](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720214509599.webp)
 
 ```js
 import { getEncoding, getEncodingNameForModel } from "js-tiktoken";
@@ -65,7 +65,7 @@ console.log("一二三", enc.encode("一二三").length);
 
 **很明显 token 的消耗和字符长度不是正相关的，而是却决于对应的分词器**
 
-![image-20260720214924347](./img/image-20260720214924347.png)
+![image-20260720214924347](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720214924347.png)
 
 
 
@@ -110,7 +110,7 @@ splitDocuments.forEach((document) => {
 });
 ```
 
-![image-20260720213425681](./img/image-20260720213425681.png)
+![image-20260720213425681](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720213425681.webp)
 
 > 注意：CharacterTextSplitter 非常死板，你告诉它按照换行符分割，**它就会严格按照这个，就算超过了 chunk size 也不拆分**
 
@@ -157,7 +157,7 @@ splitDocuments.forEach((document) => {
 });
 ```
 
-![image-20260720220140352](./img/image-20260720220140352.png)
+![image-20260720220140352](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720220140352.webp)
 
 当 “\n” 分割后还是大，就会用 “。” 还是不行再尝试用 “，”
 
@@ -204,7 +204,7 @@ splitDocuments.forEach((document) => {
 });
 ```
 
-![image-20260720221015474](./img/image-20260720221015474.png)
+![image-20260720221015474](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720221015474.png)
 
 可以看到，它优先保证 token 正好是 50，为了这个不惜强行打断文本
 
@@ -332,7 +332,7 @@ splitDocuments.forEach((document) => {
 });
 ```
 
-![image-20260720221943256](./img/image-20260720221943256.png)
+![image-20260720221943256](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720221943256.png)
 
 可以看到，都是从标题处断开的，也就是根据语法分割的
 
@@ -373,7 +373,7 @@ splitDocuments.forEach((document) => {
 
  
 
-![image-20260720222431362](./img/image-20260720222431362.png)
+![image-20260720222431362](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720222431362.png)
 
 当然RecursiveCharacterTextSplitter也可以实现一样的功能
 
@@ -487,7 +487,7 @@ splitDocuments.forEach((document) => {
 
 
 
-![image-20260720223015291](./img/image-20260720223015291.png)
+![image-20260720223015291](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720223015291.png)
 
 ### 总结
 
@@ -499,4 +499,4 @@ TokenTextSplitter 严格按照 token，会破坏文档语义，不如 RecursiveC
 
 另外两个则是 RecursiveCharacterTextSplitter 的子功能
 
-![image-20260720201840835](./img/image-20260720201840835.png)
+![image-20260720201840835](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260720201840835.webp)

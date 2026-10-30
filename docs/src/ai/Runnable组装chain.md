@@ -62,7 +62,7 @@ console.log("✅ 最终结果:");
 console.log(result);
 ```
 
-![image-20260922213905868](./img/image-20260922213905868.png)
+![image-20260922213905868](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922213905868.png)
 
 可以看到我们之前去写一个loop：
 
@@ -129,7 +129,7 @@ console.log(result);
 用 RunnableSequence 声明这三个顺序执行，最后invoke参数就好了
 
 还可以使用pipe
-![image-20260922215019287](./img/image-20260922215019287.png)
+![image-20260922215019287](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922215019287.png)
 
 实现了 Runnable api 后，就可以声明式的组合执行的 chain，然后统一执行。
 
@@ -141,7 +141,7 @@ Runnable 都有 invoke、stream、batch 方法
 
 可以去看Runnable的接口定义
 
-![image-20260922215208214](./img/image-20260922215208214.png)
+![image-20260922215208214](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260922215208214.png)
 
 - 调用 invoke，就会依次调用这个链条上每个组件的 invoke
 - batch 是批量，也就是并发进行多个单独的 invoke
@@ -149,7 +149,7 @@ Runnable 都有 invoke、stream、batch 方法
 
 串联起来的 Runnable 的 chain 就自然可以支持同步调用、批量调用、流式返回
 
-![image-20261005104740106](./img/image-20261005104740106.png)
+![image-20261005104740106](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005104740106.webp)
 
 
 
@@ -225,7 +225,7 @@ const result = await runnableMap.invoke(input);
 console.log(result);
 ```
 
-![image-20261005112218516](./img/image-20261005112218516.png)
+![image-20261005112218516](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005112218516.png)
 
 这里我们输入的 input 会并行经过 5 个 Runnable 处理，结果放到对象的对应属性上
 
@@ -265,7 +265,7 @@ for (const testCase of testCases) {
 }
 ```
 
-![image-20261005110356813](./img/image-20261005110356813.png)
+![image-20261005110356813](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005110356813.png)
 
 ### RouterRunnable
 
@@ -294,7 +294,7 @@ const result2 = await router.invoke({ key: "toUpperCase", input: "Hello World" }
 console.log('toUpperCase 结果:', result2);
 ```
 
-![image-20261005110529199](./img/image-20261005110529199.png)
+![image-20261005110529199](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005110529199.png)
 
 根据 key 匹配对应的 chain 来执行
 
@@ -334,7 +334,7 @@ const result = await chain.invoke(input);
 console.log(result);
 ```
 
-![image-20261005112314393](./img/image-20261005112314393.png)
+![image-20261005112314393](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005112314393.png)
 
 original 部分就是通过 RunnablePassthrough 拿到了原始值
 
@@ -373,7 +373,7 @@ console.log('输入:', input);
 console.log('输出:', result);
 ```
 
-![image-20261005111936149](./img/image-20261005111936149.png)
+![image-20261005111936149](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005111936149.png)
 
 对输入的数组的每个元素应用这个 chain
 
@@ -404,7 +404,7 @@ const result = await chain.invoke(inputData);
 console.log(result);
 ```
 
-![image-20261005112430118](./img/image-20261005112430118.png)
+![image-20261005112430118](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005112430118.png)
 
 ### RunnableWithMessageHistory
 
@@ -512,7 +512,7 @@ console.log();
 
 就是一个带memory的chain
 
-![image-20261005113223208](./img/image-20261005113223208.png)
+![image-20261005113223208](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261005113223208.png)
 
 ### 总结
 

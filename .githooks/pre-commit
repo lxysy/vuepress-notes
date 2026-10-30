@@ -1,0 +1,8 @@
+#!/bin/sh
+# 提交前把本地图片同步到图床：上传 → 改写 md 引用 → 更新宽高清单 → 清理本地图片
+# 改完的文件会由脚本自己加入本次提交（--stage）
+#
+# 启用方式（仓库已配置 core.hooksPath，clone 后执行一次即可）：
+#   git config core.hooksPath .githooks
+
+node "$(git rev-parse --show-toplevel)/scripts/images.js" sync --stage

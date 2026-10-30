@@ -15,7 +15,7 @@ tags:
 
 大模型返回了 AIMessage 和 tool_calls 信息
 
-![memory-management-01.png](./img/memory-management-01.png)
+![memory-management-01.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-01.webp)
 
 我们基于 tool_calls 去调用工具，然后把结果封装成 ToolMessage 也放入 messages 数组
 
@@ -23,7 +23,7 @@ tags:
 
 循环调用大模型，这是第二步
 
-![memory-management-02.png](./img/memory-management-02.png)
+![memory-management-02.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-02.webp)
 
 直到最后没有tool_callls，就返回AIMessage,得到最终回复
 
@@ -41,7 +41,7 @@ tags:
 
 langchain中有ChatMessageHistory相关的类
 
-![memory-management-03.png](./img/memory-management-03.png)
+![memory-management-03.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-03.webp)
 
 截断、总结、检索（向量数据库）完全可以自己实现：
 
@@ -117,7 +117,7 @@ inMemoryDemo().catch(console.error);
 
 运行：
 
-![memory-management-04.png](./img/memory-management-04.png)
+![memory-management-04.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-04.png)
 
 可以看到大模型记住了之前谈话的内容，之前是使用`messages`数组实现的，现在使用`InMemoryChatMessageHistory`
 
@@ -192,7 +192,7 @@ fileHistoryDemo().catch(console.error);
 
 运行：
 
-![memory-management-05.png](./img/memory-management-05.png)
+![memory-management-05.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-05.png)
 
 本地文件啊也正常写入了
 
@@ -259,7 +259,7 @@ fileHistoryDemo().catch(console.error);
 
 运行：
 
-![memory-management-06.png](./img/memory-management-06.png)
+![memory-management-06.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-06.png)
 
 实际上这样就实现了本地文件记录历史记录  
 
@@ -399,7 +399,7 @@ runAll().catch(console.error);
 
 运行：
 
-![memory-management-07.png](./img/memory-management-07.png)
+![memory-management-07.png](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/memory-management-07.png)
 
 这里是两种计数逻辑
 
@@ -551,7 +551,7 @@ ${conversationText}
 
 有 10 条消息，我们只保留最近的 2 条，之前的用 LLM 做总结
 
-![image-20260730211007799](./img/image-20260730211007799.png)
+![image-20260730211007799](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730211007799.png)
 
 这里用到了 getBufferString 的 api，它可以给 HumanMessage、AIMessage 等加上不同的前缀来格式化
 
@@ -761,7 +761,7 @@ ${conversationText}
 
 运行
 
-![image-20260730214145268](./img/image-20260730214145268.png)
+![image-20260730214145268](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730214145268.webp)
 
 cursor和claude code就是这种策略
 
@@ -769,9 +769,9 @@ cursor和claude code就是这种策略
 
 运行docker，把数据库启起来
 
-![image-20260730214622735](./img/image-20260730214622735.png)
+![image-20260730214622735](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730214622735.webp)
 
-![image-20260730214613341](./img/image-20260730214613341.png)
+![image-20260730214613341](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730214613341.webp)
 
 #### 插入数据
 
@@ -917,9 +917,9 @@ async function main() {
 main();
 ```
 
-![image-20260730215243495](./img/image-20260730215243495.png)
+![image-20260730215243495](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730215243495.png)
 
-![image-20260730215333827](./img/image-20260730215333827.png)
+![image-20260730215333827](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730215333827.webp)
 
 成功插入数据
 
@@ -1105,7 +1105,7 @@ retrievalMemoryDemo().catch(console.error);
 
 
 
-![image-20260730220129678](./img/image-20260730220129678.png)
+![image-20260730220129678](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20260730220129678.webp)
 
 通过 rag 流程来检索之前的对话，来生成了回答
 

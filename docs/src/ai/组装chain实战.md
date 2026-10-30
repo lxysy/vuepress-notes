@@ -205,7 +205,7 @@ Template 是一个 Runnable
 
 加了一个 state 在多个 Runnable 之间传递，记录了 messages 数组、是否 done、以及最终的回复 final 以及所有 tools
 
-![image-20261008210038290](./img/image-20261008210038290.png)
+![image-20261008210038290](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008210038290.png)
 
 首先大模型调用结果用 RunnablePassthrough.assign 加到 state 的 response 属性上。
 
@@ -215,25 +215,25 @@ Template 是一个 Runnable
 
 if else 分别用 RunnableLambda 来写处理逻辑
 
-![image-20261008210536193](./img/image-20261008210536193.png)
+![image-20261008210536193](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008210536193.png)
 
 这里涉及到另一个 chain 的调用，也就是执行工具的 chain
 
 用 RunnablePassthrough.assign 把执行结果加到 toolMessage 属性上
 
-![image-20261008210827597](./img/image-20261008210827597.png)
+![image-20261008210827597](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008210827597.png)
 
 toolExecutor是封装好的一个RunnableLambda
 
 这个chain 就是调用 tool，最后把结果封装成 ToolMessage
 
-![image-20261008211032208](./img/image-20261008211032208.png)
+![image-20261008211032208](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008211032208.png)
 
 最后通过我们写好的loop，统一去控制输入invoke
 
 如果返回的 state 是 done 就说明执行完了，没有 tool_call 了，就返回 final 否则继续循环调用 chain
 
-![image-20261008211152088](./img/image-20261008211152088.png)
+![image-20261008211152088](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008211152088.png)
 
 执行如上文件，发现一个报错：
 
@@ -242,7 +242,7 @@ toolExecutor是封装好的一个RunnableLambda
 - **`CUQPS_HAS_EXCEEDED_THE_LIMIT` = 高德 API 的 QPS 超限**（每秒请求数超过配额，个人开发者 key 约 3 QPS）。模型一次性发了 8 个 `maps_search_detail`，把配额打爆了。
 - **而脚本崩溃则完全是另一回事**：mcp-adapters 只有在 `invoke` 带上 `toolCall.id` 时才会把工具错误转成可恢复的 `ToolMessage`，否则直接抛 `ToolException`。你这个调用点没传，所以限流错误升级成了进程崩溃。
 
-![image-20261008212746795](./img/image-20261008212746795.png)
+![image-20261008212746795](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008212746795.png)
 
 知道了问题，这里做如下修改：
 
@@ -464,15 +464,15 @@ await runAgentWithTools("成都东站附近的酒店，最近的 3 个酒店，�
 
 最后运行下：
 
-![image-20261008213854196](./img/image-20261008213854196.png)
+![image-20261008213854196](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008213854196.webp)
 
-![image-20261008213905386](./img/image-20261008213905386.png)
+![image-20261008213905386](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008213905386.webp)
 
 ### 实战二 RAG + Milvus 电子书语义助手
 
  梳理一下整个chain
 
-![image-20261008220429605](./img/image-20261008220429605.png)
+![image-20261008220429605](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008220429605.png)
 
 检索 Milvus -> 构建带有文档片段的 prompt  -> 调用大模型 -> 打印结果
 
@@ -693,7 +693,7 @@ await main();
 
 最后用 StringOutputParser 把大模型返回结果变为字符串，然后用 stream 流式打印
 
-![image-20261008225724507](./img/image-20261008225724507.png)
+![image-20261008225724507](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008225724507.webp)
 
 通过这两个案例，就可以了解到 Runnable 的方式来写逻辑：
 
@@ -744,7 +744,7 @@ try {
 
 
 
-![image-20261008230542465](./img/image-20261008230542465.png)
+![image-20261008230542465](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008230542465.png)
 
 ### 节点回调callbacks
 
@@ -788,7 +788,7 @@ const result = await chain.invoke("  hello   world   from   langchain  ", {
 console.log("结果:", result);
 ```
 
-![image-20261008231451957](./img/image-20261008231451957.png)
+![image-20261008231451957](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008231451957.png)
 
 ### 回退withFallbacks
 
@@ -827,7 +827,7 @@ const result = await translator.invoke("hello world");
 console.log("翻译结果:", result);
 ```
 
-![image-20261008231656934](./img/image-20261008231656934.png)
+![image-20261008231656934](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008231656934.png)
 
 通过 withFallbacks 传入几种备选方案
 
@@ -958,7 +958,7 @@ console.log("✅ 最终通知内容:\n", result2.finalContent);
 
 我们在第一个节点根据配置拿用户信息，第二个节点根据配置做权限判断，第三个节点根据配置返回不同语言的内容
 
-![image-20261008231927923](./img/image-20261008231927923.png)
+![image-20261008231927923](https://gcore.jsdelivr.net/gh/lxysy/vuepress-notes-assets@main/src/ai/img/image-20261008231927923.png)
 
 ### 总结
 
