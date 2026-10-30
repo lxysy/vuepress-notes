@@ -1,0 +1,5 @@
+# shell 脚本必须是 LF 换行 + 可执行位。
+# 本仓库 core.autocrlf=true，若不加这条，checkout 时 .githooks/pre-commit
+# 会被转成 CRLF，sh 解析 shebang 时失败（bad interpreter），钩子静默失效。
+.githooks/* text eol=lf
+*.sh       text eol=lf
